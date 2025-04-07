@@ -11,6 +11,13 @@ namespace FishingTweaks;
 /// </summary>
 internal sealed partial class ModEntry : Mod
 {
+    /*********
+     ** Properties
+     *********/
+    /// <summary>The mod configuration from the player.</summary>
+    private ModConfig _config = null!;
+
+
     /// <summary>
     ///     The mod entry point, called after the mod is first loaded.
     ///     Registers event handlers for various game events.
@@ -18,10 +25,14 @@ internal sealed partial class ModEntry : Mod
     /// <param name="helper">Provides simplified APIs for writing mods.</param>
     public override void Entry(IModHelper helper)
     {
+        _config = Helper.ReadConfig<ModConfig>();
+
+        helper.Events.GameLoop.GameLaunched += SetupGMCMOnGameLaunched;
+
         // Register event handlers for different features
         helper.Events.Display.MenuChanged += SkipFishingOnMenuChanged; // Handles fishing minigame skipping
         helper.Events.Display.MenuChanged += GrabTreasureOnMenuChanged; // Handles treasure collection
         helper.Events.Input.ButtonPressed += ToggleCastingOnButtonPressed; // Handles auto-casting toggle
-        helper.Events.GameLoop.OneSecondUpdateTicked += CastingOnOneSecondUpdateTicked; // Handles auto-casting
+        helper.Events.GameLoop.UpdateTicked += CastingOnUpdateTicked; // Handles auto-casting
     }
 }

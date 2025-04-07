@@ -33,7 +33,7 @@ internal sealed partial class ModEntry
             var item = itemGrabMenu.ItemsToGrabMenu.actualInventory[i];
 
             // Skip if player's inventory is full
-            if (!Game1.player.couldInventoryAcceptThisItem(item)) continue;
+            if (Game1.player?.couldInventoryAcceptThisItem(item) == false) continue;
 
             // Get the item's position in the menu and simulate a click to collect it
             var bounds = itemGrabMenu.ItemsToGrabMenu.inventory[i].bounds;

@@ -1,0 +1,6 @@
+﻿{
+  "config.toggle-auto-casting": "Toggle Auto-Casting",
+  "config.toggle-auto-casting.tooltip": "Press this key to toggle automatic fishing rod casting",
+  "casting.start": "Auto-casting enabled",
+  "casting.stop": "Auto-casting disabled"
+}

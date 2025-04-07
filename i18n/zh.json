@@ -1,0 +1,6 @@
+{
+  "config.toggle-auto-casting": "自动抛竿开关",
+  "config.toggle-auto-casting.tooltip": "按此键开关自动抛竿功能",
+  "casting.start": "自动抛竿已启用",
+  "casting.stop": "自动抛竿已禁用"
+} 

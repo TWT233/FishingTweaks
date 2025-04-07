@@ -25,7 +25,7 @@ internal sealed partial class ModEntry
         // Set the progress bar to maximum (2.0 is the value that triggers a catch(>=1.0f))
         bobberBar.distanceFromCatching = 2.0f;
 
-        // Ensure any treasure in the minigame is caught
+        // Catch treasure
         bobberBar.treasureCaught = bobberBar.treasure;
     }
-} 
+}
