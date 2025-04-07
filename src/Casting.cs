@@ -17,7 +17,13 @@ internal sealed partial class ModEntry
     /// </summary>
     private bool _autoCasting;
 
-
+    /// <summary>
+    ///     Handles button press events to toggle auto-casting.
+    ///     When the configured toggle key is pressed, this method switches
+    ///     the auto-casting state and displays a notification to the player.
+    /// </summary>
+    /// <param name="sender">The event sender.</param>
+    /// <param name="e">The event data.</param>
     private void ToggleCastingOnButtonPressed(object? sender, ButtonPressedEventArgs e)
     {
         if (!Context.IsWorldReady) return;
@@ -26,20 +32,33 @@ internal sealed partial class ModEntry
         // Toggle the auto-casting state
         _autoCasting = !_autoCasting;
 
+        // Display a notification to the player
         var msg = Helper.Translation.Get(_autoCasting ? "casting.start" : "casting.stop");
         Game1.addHUDMessage(HUDMessage.ForCornerTextbox(msg));
     }
 
-    private void CastingOnUpdateTicked(object? sender, UpdateTickedEventArgs e)
+    /// <summary>
+    ///     Handles the update tick to perform auto-casting and skip holding fish animation.
+    ///     When auto-casting is enabled, this method automatically casts the fishing rod
+    ///     if the player is holding one and not already fishing.
+    /// </summary>
+    /// <param name="sender">The event sender.</param>
+    /// <param name="e">The event data.</param>
+    private void AutoFishingOnUpdateTicked(object? sender, UpdateTickedEventArgs e)
     {
         if (_autoCasting is false) return;
         if (!Context.IsWorldReady) return;
         if (Game1.player?.CurrentTool is not FishingRod fishingRod) return;
 
         CastRod(fishingRod);
-        SkipHoldingFish(fishingRod);
+        SkipFishShowing(fishingRod);
     }
 
+    /// <summary>
+    ///     Casts the fishing rod at the player's current position.
+    ///     This method handles the actual casting of the fishing rod.
+    /// </summary>
+    /// <param name="fishingRod">The fishing rod to cast.</param>
     private static void CastRod(FishingRod fishingRod)
     {
         if (fishingRod.inUse()) return;
@@ -51,7 +70,11 @@ internal sealed partial class ModEntry
         fishingRod.castingPower = 1.0f;
     }
 
-    private static void SkipHoldingFish(FishingRod fishingRod)
+    /// <summary>
+    ///     Skips the holding fish animation after catching a fish.
+    /// </summary>
+    /// <param name="fishingRod">The fishing rod that caught the fish.</param>
+    private static void SkipFishShowing(FishingRod fishingRod)
     {
         if (!fishingRod.fishCaught) return;
         if (Game1.player?.canMove == true) return;
