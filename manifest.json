@@ -1,0 +1,10 @@
+﻿{
+  "Name": "FishingTweaks",
+  "Author": "TWT233",
+  "Version": "1.0.0",
+  "Description": "kinda easier fishing life in Stardew Valley",
+  "UniqueID": "TWT233.FishingTweaks",
+  "EntryDll": "FishingTweaks.dll",
+  "MinimumApiVersion": "4.0.0",
+  "UpdateKeys": []
+}
