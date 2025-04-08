@@ -1,7 +1,13 @@
 ﻿{
   "config.toggle-auto-casting": "Toggle Auto-Casting",
-  "config.toggle-auto-casting.tooltip": "Press this key to toggle automatic fishing rod casting",
+  "config.toggle-auto-casting.tooltip": "Press this key to toggle automatic fishing rod casting.",
+  "config.enable-auto-baiting": "Enable Auto-Baiting",
+  "config.enable-auto-baiting.tooltip": "When enabled, automatically applies bait to the fishing rod when it runs out.",
+  "config.enable-grab-treasure": "Enable Auto-Grab Treasure",
+  "config.enable-grab-treasure.tooltip": "When enabled, automatically collects items from treasure chests during fishing.",
+  "config.enable-skip-fish-showing": "Enable Skip Fish Showing",
+  "config.enable-skip-fish-showing.tooltip": "When enabled, skips the animation of showing caught fish.",
   "casting.start": "Auto-casting enabled",
   "casting.stop": "Auto-casting disabled",
-  "baiting.applied": "Auto applied bait: "
+  "baiting.applied": "Applied bait: "
 }

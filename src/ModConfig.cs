@@ -5,24 +5,35 @@ namespace FishingTweaks;
 
 /// <summary>
 ///     Configuration class for the mod.
-///     Contains all configurable options for the mod.
+///     Contains all configurable options for the mod, including auto-casting,
+///     auto-baiting, treasure collection, and fish animation skipping.
 /// </summary>
 public sealed class ModConfig
 {
     /// <summary>
     ///     The key to toggle auto-casting functionality.
+    ///     When pressed, this key will enable or disable the automatic fishing rod casting feature.
     ///     Default is V key.
     /// </summary>
     public SButton ToggleAutoCasting { get; set; } = SButton.V;
 
+    /// <summary>
+    ///     Whether to enable skipping the fish showing animation.
+    ///     When enabled, the mod will skip the animation that plays after catching a fish.
+    /// </summary>
     public bool EnableSkipFishShowing { get; set; } = true;
 
+    /// <summary>
+    ///     Whether to enable automatic treasure collection.
+    ///     When enabled, the mod will automatically collect items from treasure chests
+    ///     during the fishing minigame.
+    /// </summary>
     public bool EnableGrabTreasure { get; set; } = true;
 
     /// <summary>
     ///     Whether to enable auto-baiting.
     ///     When enabled, the mod will automatically apply bait to the fishing rod
-    ///     when it runs out.
+    ///     when it runs out, using the first available bait from the player's inventory.
     /// </summary>
     public bool EnableAutoBaiting { get; set; } = true;
 }
@@ -35,7 +46,8 @@ internal sealed partial class ModEntry
 {
     /// <summary>
     ///     Sets up the Generic Mod Config Menu integration when the game is launched.
-    ///     Registers the mod's configuration options with the config menu.
+    ///     Registers the mod's configuration options with the config menu, including
+    ///     auto-casting toggle key, auto-baiting, treasure collection, and fish animation skipping.
     /// </summary>
     /// <param name="sender">The event sender.</param>
     /// <param name="e">The event data.</param>
