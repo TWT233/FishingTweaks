@@ -1,7 +1,9 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.Enchantments;
 using StardewValley.Tools;
+using Object = StardewValley.Object;
 
 namespace FishingTweaks;
 
@@ -38,7 +40,7 @@ internal sealed partial class ModEntry
     }
 
     /// <summary>
-    ///     Handles the update tick to perform auto-casting and skip holding fish animation.
+    ///     Handles the update tick to perform auto-casting and skip fish animations.
     ///     When auto-casting is enabled, this method automatically casts the fishing rod
     ///     if the player is holding one and not already fishing.
     /// </summary>
@@ -50,8 +52,35 @@ internal sealed partial class ModEntry
         if (!Context.IsWorldReady) return;
         if (Game1.player?.CurrentTool is not FishingRod fishingRod) return;
 
-        CastRod(fishingRod);
+        AutoBaiting(fishingRod);
+        AutoCasting(fishingRod);
         SkipFishShowing(fishingRod);
+    }
+
+    /// <summary>
+    ///     Automatically applies bait to the fishing rod when it runs out.
+    ///     This method will use the first available bait item from the player's inventory.
+    /// </summary>
+    /// <param name="fishingRod">The fishing rod to apply bait to.</param>
+    private void AutoBaiting(FishingRod fishingRod)
+    {
+        if (!_config.EnableAutoBaiting) return;
+        if (!fishingRod.CanUseBait()) return;
+        if (fishingRod.GetBait() is not null) return;
+
+        // Find the first bait item in the player's inventory
+        var bait = Game1.player.Items.FirstOrDefault(item =>
+            item is Object { Category: Object.baitCategory } o && fishingRod.canThisBeAttached(o));
+
+        if (bait is null) return;
+
+        // Apply the bait to the fishing rod
+        fishingRod.attach(bait as Object);
+        Game1.player.removeItemFromInventory(bait);
+
+        // Display a notification to the player
+        var msg = Helper.Translation.Get("baiting.applied");
+        Game1.addHUDMessage(HUDMessage.ForCornerTextbox($"{msg}{bait.DisplayName} x {bait.Stack}"));
     }
 
     /// <summary>
@@ -59,7 +88,7 @@ internal sealed partial class ModEntry
     ///     This method handles the actual casting of the fishing rod.
     /// </summary>
     /// <param name="fishingRod">The fishing rod to cast.</param>
-    private static void CastRod(FishingRod fishingRod)
+    private static void AutoCasting(FishingRod fishingRod)
     {
         if (fishingRod.inUse()) return;
         if (Game1.player?.canMove == false) return;
@@ -68,10 +97,14 @@ internal sealed partial class ModEntry
         // Cast the fishing rod at the player's current position
         fishingRod.beginUsing(Game1.currentLocation, 0, 0, Game1.player);
         fishingRod.castingPower = 1.0f;
+        
+        // Apply auto hook enchantment for auto pull
+        if (!fishingRod.hasEnchantmentOfType<AutoHookEnchantment>())
+            fishingRod.enchantments.Add(new AutoHookEnchantment());
     }
 
     /// <summary>
-    ///     Skips the holding fish animation after catching a fish.
+    ///     Skips the fish showing animation after catching a fish.
     /// </summary>
     /// <param name="fishingRod">The fishing rod that caught the fish.</param>
     private void SkipFishShowing(FishingRod fishingRod)

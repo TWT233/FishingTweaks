@@ -18,6 +18,13 @@ public sealed class ModConfig
     public bool EnableSkipFishShowing { get; set; } = true;
 
     public bool EnableGrabTreasure { get; set; } = true;
+
+    /// <summary>
+    ///     Whether to enable auto-baiting.
+    ///     When enabled, the mod will automatically apply bait to the fishing rod
+    ///     when it runs out.
+    /// </summary>
+    public bool EnableAutoBaiting { get; set; } = true;
 }
 
 /// <summary>
@@ -69,6 +76,14 @@ internal sealed partial class ModEntry
             value => _config.EnableGrabTreasure = value,
             () => Helper.Translation.Get("config.enable-grab-treasure"),
             () => Helper.Translation.Get("config.enable-grab-treasure.tooltip")
+        );
+
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.EnableAutoBaiting,
+            value => _config.EnableAutoBaiting = value,
+            () => Helper.Translation.Get("config.enable-auto-baiting"),
+            () => Helper.Translation.Get("config.enable-auto-baiting.tooltip")
         );
     }
 }
