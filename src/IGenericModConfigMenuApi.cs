@@ -234,8 +234,10 @@ public interface IGenericModConfigMenuApi
     ///     For example, you can store state in a static field or use closures to use a state variable.
     /// </remarks>
     void AddComplexOption(IManifest mod, Func<string> name, Action<SpriteBatch, Vector2> draw,
-        Func<string>? tooltip = null, Action? beforeMenuOpened = null, Action? beforeSave = null, Action? afterSave = null,
-        Action? beforeReset = null, Action? afterReset = null, Action? beforeMenuClosed = null, Func<int>? height = null,
+        Func<string>? tooltip = null, Action? beforeMenuOpened = null, Action? beforeSave = null,
+        Action? afterSave = null,
+        Action? beforeReset = null, Action? afterReset = null, Action? beforeMenuClosed = null,
+        Func<int>? height = null,
         string? fieldId = null);
 
     /// <summary>Set whether the options registered after this point can only be edited from the title screen.</summary>

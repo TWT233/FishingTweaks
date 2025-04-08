@@ -14,6 +14,8 @@ public sealed class ModConfig
     ///     Default is V key.
     /// </summary>
     public SButton ToggleAutoCasting { get; set; } = SButton.V;
+
+    public bool EnableSkipFishShowing { get; set; } = true;
 }
 
 /// <summary>
@@ -45,10 +47,18 @@ internal sealed partial class ModEntry
         // Add config options
         configMenu.AddKeybind(
             ModManifest,
-            name: () => Helper.Translation.Get("config.toggle-auto-casting"),
-            tooltip: () => Helper.Translation.Get("config.toggle-auto-casting.tooltip"),
-            getValue: () => _config.ToggleAutoCasting,
-            setValue: value => _config.ToggleAutoCasting = value
+            () => _config.ToggleAutoCasting,
+            value => _config.ToggleAutoCasting = value,
+            () => Helper.Translation.Get("config.toggle-auto-casting"),
+            () => Helper.Translation.Get("config.toggle-auto-casting.tooltip")
+        );
+
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.EnableSkipFishShowing,
+            value => _config.EnableSkipFishShowing = value,
+            () => Helper.Translation.Get("config.enable-skip-fish-showing"),
+            () => Helper.Translation.Get("config.enable-skip-fish-showing.tooltip")
         );
     }
 }
