@@ -74,8 +74,9 @@ internal sealed partial class ModEntry
     ///     Skips the holding fish animation after catching a fish.
     /// </summary>
     /// <param name="fishingRod">The fishing rod that caught the fish.</param>
-    private static void SkipFishShowing(FishingRod fishingRod)
+    private void SkipFishShowing(FishingRod fishingRod)
     {
+        if (!_config.EnableSkipFishShowing) return;
         if (!fishingRod.fishCaught) return;
         if (Game1.player?.canMove == true) return;
         if (Game1.isFestival()) return;

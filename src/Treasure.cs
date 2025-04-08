@@ -19,8 +19,10 @@ internal sealed partial class ModEntry
     /// </summary>
     /// <param name="sender">The event sender.</param>
     /// <param name="e">The event data.</param>
-    private static void GrabTreasureOnMenuChanged(object? sender, MenuChangedEventArgs e)
+    private void GrabTreasureOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
+        if (!_config.EnableGrabTreasure) return;
+
         // Check if the new menu is an item grab menu (treasure chest)
         if (e.NewMenu is not ItemGrabMenu itemGrabMenu) return;
 
