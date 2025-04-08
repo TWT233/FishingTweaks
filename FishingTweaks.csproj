@@ -7,13 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.3.2"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="AutoFishing2">
-            <HintPath>D:\Games\SteamLibrary\steamapps\common\Stardew Valley\mymods\AutoFishing2\AutoFishing2.dll</HintPath>
-        </Reference>
+      <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.3.2" />
     </ItemGroup>
 
 </Project>
