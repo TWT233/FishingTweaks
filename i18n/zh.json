@@ -15,9 +15,9 @@
   "config.enable-auto-catch-familiar-fish.tooltip": "启用后，会自动捕获已经钓到过至少5次的鱼类",
   "config.min-catch-count-for-auto-catch": "自动捕获最低捕获次数",
   "config.min-catch-count-for-auto-catch.tooltip": "鱼类需要被捕获的次数，达到此次数后才会被视为\"熟悉\"并自动捕获",
-  "casting.start": "自动钓鱼已启用",
-  "casting.stop": "自动钓鱼已禁用",
-  "casting.low_stamina": "自动钓鱼已禁用：体力不足",
+  "fishing.start": "自动钓鱼已启用",
+  "fishing.stop": "自动钓鱼已禁用",
+  "fishing.low_stamina": "自动钓鱼已禁用：体力不足",
   "baiting.applied": "已补充鱼饵：",
   "tackling.applied": "已补充钓具：",
   "fishing.auto_caught": "自动捕获："

@@ -28,7 +28,7 @@ internal sealed partial class ModEntry
     /// </summary>
     /// <param name="sender">The event sender.</param>
     /// <param name="e">The event data containing the pressed button information.</param>
-    private void ToggleAutoFishingOnButtonPressed(object? sender, ButtonPressedEventArgs e)
+    private void ToggleCastingOnButtonPressed(object? sender, ButtonPressedEventArgs e)
     {
         if (!Context.IsWorldReady) return;
         if (e.Button != _config.ToggleAutoFishing) return;
@@ -37,7 +37,7 @@ internal sealed partial class ModEntry
         _autoFishing = !_autoFishing;
 
         // Display a notification to the player
-        var msg = Helper.Translation.Get(_autoFishing ? "casting.start" : "casting.stop");
+        var msg = Helper.Translation.Get(_autoFishing ? "fishing.start" : "fishing.stop");
         Game1.addHUDMessage(HUDMessage.ForCornerTextbox(msg));
     }
 
@@ -138,7 +138,7 @@ internal sealed partial class ModEntry
         _autoFishing = false;
 
         // Show low stamina message
-        var msg = Helper.Translation.Get("casting.low_stamina");
+        var msg = Helper.Translation.Get("fishing.low_stamina");
         Game1.addHUDMessage(HUDMessage.ForCornerTextbox(msg));
 
         // Open inventory menu
