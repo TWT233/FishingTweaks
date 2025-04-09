@@ -155,7 +155,8 @@ internal sealed partial class ModEntry
     private void AutoCasting(FishingRod fishingRod)
     {
         if (fishingRod.inUse()) return;
-        if (Game1.player?.canMove == false) return;
+        if (Game1.player is null) return;
+        if (Game1.player.canMove == false) return;
         if (Game1.activeClickableMenu is not null) return;
 
         // Check player's stamina against the configured minimum
