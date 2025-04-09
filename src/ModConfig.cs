@@ -10,6 +10,8 @@ namespace FishingTweaks;
 /// </summary>
 public sealed class ModConfig
 {
+    private FishCounterConfig? _fishCounter = new();
+
     /// <summary>
     ///     The key to toggle auto-fishing functionality.
     ///     When pressed, this key will enable or disable the automatic fishing feature.
@@ -50,6 +52,13 @@ public sealed class ModConfig
     ///     and a notification will be shown.
     /// </summary>
     public int MinStaminaForAutoFishing { get; set; } = 10;
+
+
+    public string FishCounter
+    {
+        get => _fishCounter?.Serialize() ?? "";
+        set => _fishCounter = FishCounterConfig.Deserialize(value);
+    }
 }
 
 /// <summary>
