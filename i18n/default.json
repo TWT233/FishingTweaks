@@ -9,9 +9,11 @@
   "config.enable-grab-treasure.tooltip": "When enabled, automatically collects items from treasure chests during fishing.",
   "config.enable-skip-fish-showing": "Enable Skip Fish Showing",
   "config.enable-skip-fish-showing.tooltip": "When enabled, skips the animation of showing caught fish.",
+  "config.min-stamina-for-auto-casting": "Minimum Stamina for Auto-Casting",
+  "config.min-stamina-for-auto-casting.tooltip": "Auto-casting will be disabled when stamina falls below this value.",
   "casting.start": "Auto-casting enabled",
   "casting.stop": "Auto-casting disabled",
-  "casting.low_stamina": "Low stamina, auto-casting disabled",
+  "casting.low_stamina": "Auto-casting disabled: Low stamina",
   "baiting.applied": "Applied bait: ",
   "tackling.applied": "Applied tackle: "
 }

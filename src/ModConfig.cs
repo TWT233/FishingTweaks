@@ -43,6 +43,13 @@ public sealed class ModConfig
     ///     when it breaks, using the first available tackle from the player's inventory.
     /// </summary>
     public bool EnableAutoTackling { get; set; } = true;
+
+    /// <summary>
+    ///     The minimum stamina required for auto-casting.
+    ///     When player's stamina falls below this value, auto-casting will be disabled
+    ///     and a notification will be shown.
+    /// </summary>
+    public int MinStaminaForAutoCasting { get; set; } = 10;
 }
 
 /// <summary>
@@ -111,6 +118,14 @@ internal sealed partial class ModEntry
             value => _config.EnableAutoTackling = value,
             () => Helper.Translation.Get("config.enable-auto-tackling"),
             () => Helper.Translation.Get("config.enable-auto-tackling.tooltip")
+        );
+
+        configMenu.AddNumberOption(
+            ModManifest,
+            () => _config.MinStaminaForAutoCasting,
+            value => _config.MinStaminaForAutoCasting = value,
+            () => Helper.Translation.Get("config.min-stamina-for-auto-casting"),
+            () => Helper.Translation.Get("config.min-stamina-for-auto-casting.tooltip")
         );
     }
 }

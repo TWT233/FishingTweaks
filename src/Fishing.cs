@@ -148,7 +148,7 @@ internal sealed partial class ModEntry
     ///     Casts the fishing rod at the player's current position.
     ///     This method handles the actual casting of the fishing rod, including
     ///     setting the casting power and applying the auto-hook enchantment
-    ///     for automatic fish pulling. If player's stamina is too low (below 10),
+    ///     for automatic fish pulling. If player's stamina is too low (below the configured minimum),
     ///     it will disable auto-casting and open the inventory menu.
     /// </summary>
     /// <param name="fishingRod">The fishing rod to cast.</param>
@@ -158,8 +158,8 @@ internal sealed partial class ModEntry
         if (Game1.player?.canMove == false) return;
         if (Game1.activeClickableMenu is not null) return;
 
-        // Check player's stamina
-        if (Game1.player.Stamina < 10)
+        // Check player's stamina against the configured minimum
+        if (Game1.player.Stamina < _config.MinStaminaForAutoCasting)
         {
             HandleLowStamina();
             return;

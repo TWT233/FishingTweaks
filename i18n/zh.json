@@ -9,9 +9,11 @@
   "config.enable-grab-treasure.tooltip": "启用后，会自动将钓鱼宝箱中的物品收集到背包",
   "config.enable-skip-fish-showing": "跳过展示鱼环节",
   "config.enable-skip-fish-showing.tooltip": "启用后，跳过钓到鱼后的展示动作",
+  "config.min-stamina-for-auto-casting": "自动抛竿最低体力要求",
+  "config.min-stamina-for-auto-casting.tooltip": "当体力低于此值时，自动抛竿功能将被禁用",
   "casting.start": "自动抛竿已启用",
   "casting.stop": "自动抛竿已禁用",
-  "casting.low_stamina": "体力不足，自动抛竿已禁用",
+  "casting.low_stamina": "自动抛竿已禁用：体力不足",
   "baiting.applied": "已补充鱼饵：",
   "tackling.applied": "已补充钓具："
 } 
