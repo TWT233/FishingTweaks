@@ -1,6 +1,6 @@
 {
-  "config.toggle-auto-casting": "切换自动抛竿",
-  "config.toggle-auto-casting.tooltip": "按此键切换自动抛竿功能",
+  "config.toggle-auto-fishing": "切换自动钓鱼",
+  "config.toggle-auto-fishing.tooltip": "按此键切换自动钓鱼功能",
   "config.enable-auto-baiting": "启用自动补充鱼饵",
   "config.enable-auto-baiting.tooltip": "启用后，当钓竿上的鱼饵耗尽时会自动从背包中补充",
   "config.enable-auto-tackling": "启用自动补充钓具",
@@ -9,11 +9,16 @@
   "config.enable-grab-treasure.tooltip": "启用后，会自动将钓鱼宝箱中的物品收集到背包",
   "config.enable-skip-fish-showing": "跳过展示鱼环节",
   "config.enable-skip-fish-showing.tooltip": "启用后，跳过钓到鱼后的展示动作",
-  "config.min-stamina-for-auto-casting": "自动抛竿最低体力要求",
-  "config.min-stamina-for-auto-casting.tooltip": "当体力低于此值时，自动抛竿功能将被禁用",
-  "casting.start": "自动抛竿已启用",
-  "casting.stop": "自动抛竿已禁用",
-  "casting.low_stamina": "自动抛竿已禁用：体力不足",
+  "config.min-stamina-for-auto-fishing": "自动钓鱼最低体力要求",
+  "config.min-stamina-for-auto-fishing.tooltip": "当体力低于此值时，自动钓鱼功能将被禁用",
+  "config.enable-auto-catch-familiar-fish": "自动捕获熟悉鱼类",
+  "config.enable-auto-catch-familiar-fish.tooltip": "启用后，会自动捕获已经钓到过至少5次的鱼类",
+  "config.min-catch-count-for-auto-catch": "自动捕获最低捕获次数",
+  "config.min-catch-count-for-auto-catch.tooltip": "鱼类需要被捕获的次数，达到此次数后才会被视为\"熟悉\"并自动捕获",
+  "casting.start": "自动钓鱼已启用",
+  "casting.stop": "自动钓鱼已禁用",
+  "casting.low_stamina": "自动钓鱼已禁用：体力不足",
   "baiting.applied": "已补充鱼饵：",
-  "tackling.applied": "已补充钓具："
+  "tackling.applied": "已补充钓具：",
+  "fishing.auto_caught": "自动捕获："
 } 

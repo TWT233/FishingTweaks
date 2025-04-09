@@ -2,6 +2,7 @@
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Enchantments;
+using StardewValley.Menus;
 using StardewValley.Tools;
 using Object = StardewValley.Object;
 
@@ -15,33 +16,33 @@ namespace FishingTweaks;
 internal sealed partial class ModEntry
 {
     /// <summary>
-    ///     Tracks whether auto-casting is currently enabled.
+    ///     Tracks whether auto-fishing is currently enabled.
     ///     This state can be toggled using the configured key (default: V).
     /// </summary>
-    private bool _autoCasting;
+    private bool _autoFishing;
 
     /// <summary>
-    ///     Handles button press events to toggle auto-casting.
+    ///     Handles button press events to toggle auto-fishing.
     ///     When the configured toggle key is pressed, this method switches
-    ///     the auto-casting state and displays a notification to the player.
+    ///     the auto-fishing state and displays a notification to the player.
     /// </summary>
     /// <param name="sender">The event sender.</param>
     /// <param name="e">The event data containing the pressed button information.</param>
-    private void ToggleCastingOnButtonPressed(object? sender, ButtonPressedEventArgs e)
+    private void ToggleAutoFishingOnButtonPressed(object? sender, ButtonPressedEventArgs e)
     {
         if (!Context.IsWorldReady) return;
-        if (e.Button != _config.ToggleAutoCasting) return;
+        if (e.Button != _config.ToggleAutoFishing) return;
 
-        // Toggle the auto-casting state
-        _autoCasting = !_autoCasting;
+        // Toggle the auto-fishing state
+        _autoFishing = !_autoFishing;
 
         // Display a notification to the player
-        var msg = Helper.Translation.Get(_autoCasting ? "casting.start" : "casting.stop");
+        var msg = Helper.Translation.Get(_autoFishing ? "casting.start" : "casting.stop");
         Game1.addHUDMessage(HUDMessage.ForCornerTextbox(msg));
     }
 
     /// <summary>
-    ///     Handles the update tick to perform auto-casting and manage fishing-related features.
+    ///     Handles the update tick to perform auto-fishing and manage fishing-related features.
     ///     This method coordinates all automatic fishing features including:
     ///     - Auto-casting the fishing rod
     ///     - Auto-applying bait
@@ -52,7 +53,7 @@ internal sealed partial class ModEntry
     /// <param name="e">The event data.</param>
     private void AutoFishingOnUpdateTicked(object? sender, UpdateTickedEventArgs e)
     {
-        if (_autoCasting is false) return;
+        if (_autoFishing is false) return;
         if (!Context.IsWorldReady) return;
         if (Game1.player?.CurrentTool is not FishingRod fishingRod) return;
 
@@ -117,7 +118,7 @@ internal sealed partial class ModEntry
 
             // Apply the tackle to the fishing rod
             fishingRod.attach(tackle as Object);
-            
+
             // Remove the tackle from the player's inventory
             Game1.player.removeItemFromInventory(tackle);
 
@@ -128,20 +129,20 @@ internal sealed partial class ModEntry
     }
 
     /// <summary>
-    ///     Handles low stamina situation by disabling auto-casting,
+    ///     Handles low stamina situation by disabling auto-fishing,
     ///     showing a notification, and opening the inventory menu.
     /// </summary>
     private void HandleLowStamina()
     {
-        // Disable auto-casting
-        _autoCasting = false;
-        
+        // Disable auto-fishing
+        _autoFishing = false;
+
         // Show low stamina message
         var msg = Helper.Translation.Get("casting.low_stamina");
         Game1.addHUDMessage(HUDMessage.ForCornerTextbox(msg));
-        
+
         // Open inventory menu
-        Game1.activeClickableMenu = new StardewValley.Menus.GameMenu();
+        Game1.activeClickableMenu = new GameMenu();
     }
 
     /// <summary>
@@ -149,7 +150,7 @@ internal sealed partial class ModEntry
     ///     This method handles the actual casting of the fishing rod, including
     ///     setting the casting power and applying the auto-hook enchantment
     ///     for automatic fish pulling. If player's stamina is too low (below the configured minimum),
-    ///     it will disable auto-casting and open the inventory menu.
+    ///     it will disable auto-fishing and open the inventory menu.
     /// </summary>
     /// <param name="fishingRod">The fishing rod to cast.</param>
     private void AutoCasting(FishingRod fishingRod)
@@ -160,7 +161,7 @@ internal sealed partial class ModEntry
         if (Game1.activeClickableMenu is not null) return;
 
         // Check player's stamina against the configured minimum
-        if (Game1.player.Stamina < _config.MinStaminaForAutoCasting)
+        if (Game1.player.Stamina < _config.MinStaminaForAutoFishing)
         {
             HandleLowStamina();
             return;

@@ -11,11 +11,11 @@ namespace FishingTweaks;
 public sealed class ModConfig
 {
     /// <summary>
-    ///     The key to toggle auto-casting functionality.
-    ///     When pressed, this key will enable or disable the automatic fishing rod casting feature.
+    ///     The key to toggle auto-fishing functionality.
+    ///     When pressed, this key will enable or disable the automatic fishing feature.
     ///     Default is V key.
     /// </summary>
-    public SButton ToggleAutoCasting { get; set; } = SButton.V;
+    public SButton ToggleAutoFishing { get; set; } = SButton.V;
 
     /// <summary>
     ///     Whether to enable skipping the fish showing animation.
@@ -45,11 +45,11 @@ public sealed class ModConfig
     public bool EnableAutoTackling { get; set; } = true;
 
     /// <summary>
-    ///     The minimum stamina required for auto-casting.
-    ///     When player's stamina falls below this value, auto-casting will be disabled
+    ///     The minimum stamina required for auto-fishing.
+    ///     When player's stamina falls below this value, auto-fishing will be disabled
     ///     and a notification will be shown.
     /// </summary>
-    public int MinStaminaForAutoCasting { get; set; } = 10;
+    public int MinStaminaForAutoFishing { get; set; } = 10;
 }
 
 /// <summary>
@@ -82,10 +82,10 @@ internal sealed partial class ModEntry
         // Add config options
         configMenu.AddKeybind(
             ModManifest,
-            () => _config.ToggleAutoCasting,
-            value => _config.ToggleAutoCasting = value,
-            () => Helper.Translation.Get("config.toggle-auto-casting"),
-            () => Helper.Translation.Get("config.toggle-auto-casting.tooltip")
+            () => _config.ToggleAutoFishing,
+            value => _config.ToggleAutoFishing = value,
+            () => Helper.Translation.Get("config.toggle-auto-fishing"),
+            () => Helper.Translation.Get("config.toggle-auto-fishing.tooltip")
         );
 
         configMenu.AddBoolOption(
@@ -122,10 +122,10 @@ internal sealed partial class ModEntry
 
         configMenu.AddNumberOption(
             ModManifest,
-            () => _config.MinStaminaForAutoCasting,
-            value => _config.MinStaminaForAutoCasting = value,
-            () => Helper.Translation.Get("config.min-stamina-for-auto-casting"),
-            () => Helper.Translation.Get("config.min-stamina-for-auto-casting.tooltip")
+            () => _config.MinStaminaForAutoFishing,
+            value => _config.MinStaminaForAutoFishing = value,
+            () => Helper.Translation.Get("config.min-stamina-for-auto-fishing"),
+            () => Helper.Translation.Get("config.min-stamina-for-auto-fishing.tooltip")
         );
     }
 }
