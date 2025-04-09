@@ -89,7 +89,8 @@ internal sealed partial class ModEntry
         var msg = Helper.Translation.Get("baiting.applied");
         Game1.addHUDMessage(HUDMessage.ForCornerTextbox($"{msg}{bait.DisplayName} x {bait.Stack}"));
     }
-    
+
+
     private void AutoTackling(FishingRod fishingRod)
     {
         if (!_config.EnableAutoTackling) return;
@@ -98,7 +99,7 @@ internal sealed partial class ModEntry
         for (var i = 1; i < fishingRod.attachments.Count; ++i)
         {
             if (fishingRod.attachments[i] is not null) continue;
-            
+
             var tackle = Game1.player.Items.FirstOrDefault(item =>
                 item is Object { Category: Object.tackleCategory } o && fishingRod.canThisBeAttached(o));
 
@@ -106,7 +107,7 @@ internal sealed partial class ModEntry
 
             fishingRod.attach(tackle as Object);
             Game1.player.removeItemFromInventory(tackle);
-            
+
             // Display a notification to the player
             var msg = Helper.Translation.Get("tackling.applied");
             Game1.addHUDMessage(HUDMessage.ForCornerTextbox($"{msg}{tackle.DisplayName}"));
@@ -129,7 +130,7 @@ internal sealed partial class ModEntry
         // Cast the fishing rod at the player's current position
         fishingRod.beginUsing(Game1.currentLocation, 0, 0, Game1.player);
         fishingRod.castingPower = 1.0f;
-        
+
         // Apply auto hook enchantment for auto pull
         if (!fishingRod.hasEnchantmentOfType<AutoHookEnchantment>())
             fishingRod.enchantments.Add(new AutoHookEnchantment());

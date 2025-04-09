@@ -3,11 +3,14 @@
   "config.toggle-auto-casting.tooltip": "按此键切换自动抛竿功能",
   "config.enable-auto-baiting": "启用自动补充鱼饵",
   "config.enable-auto-baiting.tooltip": "启用后，当钓竿上的鱼饵耗尽时会自动从背包中补充",
+  "config.enable-auto-tackling": "启用自动补充钓具",
+  "config.enable-auto-tackling.tooltip": "启用后，当钓竿上的钓具损坏时会自动从背包中补充",
   "config.enable-grab-treasure": "启用自动收集宝箱",
   "config.enable-grab-treasure.tooltip": "启用后，会自动将钓鱼宝箱中的物品收集到背包",
   "config.enable-skip-fish-showing": "跳过展示鱼环节",
   "config.enable-skip-fish-showing.tooltip": "启用后，跳过钓到鱼后的展示动作",
   "casting.start": "自动抛竿已启用",
   "casting.stop": "自动抛竿已禁用",
-  "baiting.applied": "已补充鱼饵："
+  "baiting.applied": "已补充鱼饵：",
+  "tackling.applied": "已补充钓具："
 } 

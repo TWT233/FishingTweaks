@@ -36,7 +36,12 @@ public sealed class ModConfig
     ///     when it runs out, using the first available bait from the player's inventory.
     /// </summary>
     public bool EnableAutoBaiting { get; set; } = true;
-    
+
+    /// <summary>
+    ///     Whether to enable auto-tackling.
+    ///     When enabled, the mod will automatically apply tackle to the fishing rod
+    ///     when it breaks, using the first available tackle from the player's inventory.
+    /// </summary>
     public bool EnableAutoTackling { get; set; } = true;
 }
 
@@ -99,7 +104,7 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.enable-auto-baiting"),
             () => Helper.Translation.Get("config.enable-auto-baiting.tooltip")
         );
-        
+
         configMenu.AddBoolOption(
             ModManifest,
             () => _config.EnableAutoTackling,
