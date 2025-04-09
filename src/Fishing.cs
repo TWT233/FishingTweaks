@@ -128,17 +128,42 @@ internal sealed partial class ModEntry
     }
 
     /// <summary>
+    ///     Handles low stamina situation by disabling auto-casting,
+    ///     showing a notification, and opening the inventory menu.
+    /// </summary>
+    private void HandleLowStamina()
+    {
+        // Disable auto-casting
+        _autoCasting = false;
+        
+        // Show low stamina message
+        var msg = Helper.Translation.Get("casting.low_stamina");
+        Game1.addHUDMessage(HUDMessage.ForCornerTextbox(msg));
+        
+        // Open inventory menu
+        Game1.activeClickableMenu = new StardewValley.Menus.GameMenu();
+    }
+
+    /// <summary>
     ///     Casts the fishing rod at the player's current position.
     ///     This method handles the actual casting of the fishing rod, including
     ///     setting the casting power and applying the auto-hook enchantment
-    ///     for automatic fish pulling.
+    ///     for automatic fish pulling. If player's stamina is too low (below 10),
+    ///     it will disable auto-casting and open the inventory menu.
     /// </summary>
     /// <param name="fishingRod">The fishing rod to cast.</param>
-    private static void AutoCasting(FishingRod fishingRod)
+    private void AutoCasting(FishingRod fishingRod)
     {
         if (fishingRod.inUse()) return;
         if (Game1.player?.canMove == false) return;
         if (Game1.activeClickableMenu is not null) return;
+
+        // Check player's stamina
+        if (Game1.player.Stamina < 10)
+        {
+            HandleLowStamina();
+            return;
+        }
 
         // Cast the fishing rod at the player's current position
         fishingRod.beginUsing(Game1.currentLocation, 0, 0, Game1.player);

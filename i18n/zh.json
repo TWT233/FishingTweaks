@@ -11,6 +11,7 @@
   "config.enable-skip-fish-showing.tooltip": "启用后，跳过钓到鱼后的展示动作",
   "casting.start": "自动抛竿已启用",
   "casting.stop": "自动抛竿已禁用",
+  "casting.low_stamina": "体力不足，自动抛竿已禁用",
   "baiting.applied": "已补充鱼饵：",
   "tackling.applied": "已补充钓具："
 } 

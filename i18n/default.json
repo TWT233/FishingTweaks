@@ -11,6 +11,7 @@
   "config.enable-skip-fish-showing.tooltip": "When enabled, skips the animation of showing caught fish.",
   "casting.start": "Auto-casting enabled",
   "casting.stop": "Auto-casting disabled",
+  "casting.low_stamina": "Low stamina, auto-casting disabled",
   "baiting.applied": "Applied bait: ",
   "tackling.applied": "Applied tackle: "
 }
