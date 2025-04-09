@@ -36,6 +36,8 @@ public sealed class ModConfig
     ///     when it runs out, using the first available bait from the player's inventory.
     /// </summary>
     public bool EnableAutoBaiting { get; set; } = true;
+    
+    public bool EnableAutoTackling { get; set; } = true;
 }
 
 /// <summary>
@@ -96,6 +98,14 @@ internal sealed partial class ModEntry
             value => _config.EnableAutoBaiting = value,
             () => Helper.Translation.Get("config.enable-auto-baiting"),
             () => Helper.Translation.Get("config.enable-auto-baiting.tooltip")
+        );
+        
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.EnableAutoTackling,
+            value => _config.EnableAutoTackling = value,
+            () => Helper.Translation.Get("config.enable-auto-tackling"),
+            () => Helper.Translation.Get("config.enable-auto-tackling.tooltip")
         );
     }
 }

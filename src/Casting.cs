@@ -57,6 +57,7 @@ internal sealed partial class ModEntry
         if (Game1.player?.CurrentTool is not FishingRod fishingRod) return;
 
         AutoBaiting(fishingRod);
+        AutoTackling(fishingRod);
         AutoCasting(fishingRod);
         SkipFishShowing(fishingRod);
     }
@@ -87,6 +88,29 @@ internal sealed partial class ModEntry
         // Display a notification to the player
         var msg = Helper.Translation.Get("baiting.applied");
         Game1.addHUDMessage(HUDMessage.ForCornerTextbox($"{msg}{bait.DisplayName} x {bait.Stack}"));
+    }
+    
+    private void AutoTackling(FishingRod fishingRod)
+    {
+        if (!_config.EnableAutoTackling) return;
+        if (!fishingRod.CanUseTackle()) return;
+
+        for (var i = 1; i < fishingRod.attachments.Count; ++i)
+        {
+            if (fishingRod.attachments[i] is not null) continue;
+            
+            var tackle = Game1.player.Items.FirstOrDefault(item =>
+                item is Object { Category: Object.tackleCategory } o && fishingRod.canThisBeAttached(o));
+
+            if (tackle is null) break;
+
+            fishingRod.attach(tackle as Object);
+            Game1.player.removeItemFromInventory(tackle);
+            
+            // Display a notification to the player
+            var msg = Helper.Translation.Get("tackling.applied");
+            Game1.addHUDMessage(HUDMessage.ForCornerTextbox($"{msg}{tackle.DisplayName}"));
+        }
     }
 
     /// <summary>
