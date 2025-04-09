@@ -28,7 +28,7 @@ internal sealed partial class ModEntry
     /// </summary>
     /// <param name="sender">The event sender.</param>
     /// <param name="e">The event data containing the pressed button information.</param>
-    private void ToggleCastingOnButtonPressed(object? sender, ButtonPressedEventArgs e)
+    private void ToggleAutoFishingOnButtonPressed(object? sender, ButtonPressedEventArgs e)
     {
         if (!Context.IsWorldReady) return;
         if (e.Button != _config.ToggleAutoFishing) return;
