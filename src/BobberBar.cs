@@ -18,12 +18,12 @@ internal sealed partial class ModEntry
     /// </summary>
     /// <param name="sender">The event sender.</param>
     /// <param name="e">The event data.</param>
-    private void SkipFishingOnMenuChanged(object? sender, MenuChangedEventArgs e)
+    private void SkipMinigameOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
         // Check if the new menu is the fishing minigame
         if (e.NewMenu is not BobberBar bobberBar) return;
 
-        if (!_config.SatisfiedSkipFishing(bobberBar.whichFish))
+        if (!_config.SatisfiedSkipMinigame(bobberBar.whichFish))
         {
             _config.FishCounter.CurrentCount(bobberBar.whichFish, out var catchCount, out var perfectCount);
             Game1.addHUDMessage(HUDMessage.ForCornerTextbox(

@@ -59,7 +59,7 @@ public sealed class ModConfig
     public int MinPerfectCountForSkipFishing { get; set; }
 
 
-    public bool SatisfiedSkipFishing(string whichFish)
+    public bool SatisfiedSkipMinigame(string whichFish)
     {
         return FishCounter.Satisfied(whichFish, MinCatchCountForSkipFishing, MinPerfectCountForSkipFishing);
     }
@@ -93,6 +93,12 @@ internal sealed partial class ModEntry
         );
 
         // Add config options
+
+        configMenu.AddSectionTitle(
+            ModManifest,
+            () => Helper.Translation.Get("config.section.auto-fishing")
+        );
+
         configMenu.AddKeybind(
             ModManifest,
             () => _config.ToggleAutoFishing,
@@ -107,14 +113,6 @@ internal sealed partial class ModEntry
             value => _config.MinStaminaForAutoFishing = value,
             () => Helper.Translation.Get("config.min-stamina-for-auto-fishing"),
             () => Helper.Translation.Get("config.min-stamina-for-auto-fishing.tooltip")
-        );
-
-        configMenu.AddBoolOption(
-            ModManifest,
-            () => _config.EnableGrabTreasure,
-            value => _config.EnableGrabTreasure = value,
-            () => Helper.Translation.Get("config.enable-grab-treasure"),
-            () => Helper.Translation.Get("config.enable-grab-treasure.tooltip")
         );
 
         configMenu.AddBoolOption(
@@ -141,20 +139,33 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.enable-skip-fish-showing.tooltip")
         );
 
+        configMenu.AddSectionTitle(
+            ModManifest,
+            () => Helper.Translation.Get("config.section.minigame")
+        );
+        
         configMenu.AddNumberOption(
             ModManifest,
             () => _config.MinCatchCountForSkipFishing,
             value => _config.MinCatchCountForSkipFishing = value,
-            () => Helper.Translation.Get("config.min-catch-count-for-skip-fishing"),
-            () => Helper.Translation.Get("config.min-catch-count-for-skip-fishing.tooltip")
+            () => Helper.Translation.Get("config.min-catch-count-for-skip-minigame"),
+            () => Helper.Translation.Get("config.min-catch-count-for-skip-minigame.tooltip")
         );
 
         configMenu.AddNumberOption(
             ModManifest,
             () => _config.MinPerfectCountForSkipFishing,
             value => _config.MinPerfectCountForSkipFishing = value,
-            () => Helper.Translation.Get("config.min-perfect-count-for-skip-fishing"),
-            () => Helper.Translation.Get("config.min-perfect-count-for-skip-fishing.tooltip")
+            () => Helper.Translation.Get("config.min-perfect-count-for-skip-minigame"),
+            () => Helper.Translation.Get("config.min-perfect-count-for-skip-minigame.tooltip")
+        );
+
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.EnableGrabTreasure,
+            value => _config.EnableGrabTreasure = value,
+            () => Helper.Translation.Get("config.enable-grab-treasure"),
+            () => Helper.Translation.Get("config.enable-grab-treasure.tooltip")
         );
 
         _config.FishCounter.ArrangeMenu(ModManifest, Helper, configMenu);

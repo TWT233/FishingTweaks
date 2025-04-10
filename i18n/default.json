@@ -11,10 +11,10 @@
   "config.enable-skip-fish-showing.tooltip": "When enabled, skips the fish showing animation after catching a fish.",
   "config.min-stamina-for-auto-fishing": "Minimum Stamina for Auto-Fishing",
   "config.min-stamina-for-auto-fishing.tooltip": "Auto-fishing will be disabled when stamina is below this value.",
-  "config.min-catch-count-for-skip-fishing": "Minimum Catch Count for Skip Fishing",
-  "config.min-catch-count-for-skip-fishing.tooltip": "When a fish's catch count reaches this value, the fishing minigame will be automatically skipped.",
-  "config.min-perfect-count-for-skip-fishing": "Minimum Perfect Count for Skip Fishing",
-  "config.min-perfect-count-for-skip-fishing.tooltip": "When a fish's perfect catch count reaches this value, the fishing minigame will be automatically skipped.",
+  "config.min-catch-count-for-skip-minigame": "Minimum Catch Count for Skip Fishing",
+  "config.min-catch-count-for-skip-minigame.tooltip": "When a fish's catch count reaches this value, the fishing minigame will be automatically skipped.",
+  "config.min-perfect-count-for-skip-minigame": "Minimum Perfect Count for Skip Fishing",
+  "config.min-perfect-count-for-skip-minigame.tooltip": "When a fish's perfect catch count reaches this value, the fishing minigame will be automatically skipped.",
   "fishing.start": "Auto-fishing enabled",
   "fishing.stop": "Auto-fishing disabled",
   "fishing.low_stamina": "Not enough stamina for auto-fishing",
@@ -25,5 +25,7 @@
   "config.fish-counter.catch-count": "Catch Count: ",
   "config.fish-counter.perfect-count": "Perfect Catch Count: ",
   "bobber-bar.familiar": "You caught a familiar {fishName}!",
-  "bobber-bar.needed": "You need {catchNeeded} more catches and {perfectNeeded} perfect catches to skip fishing minigame for {fishName}."
-}
+  "bobber-bar.needed": "You need {catchNeeded} more catches and {perfectNeeded} perfect catches to skip fishing minigame for {fishName}.",
+  "config.section.auto-fishing": "Auto-Fishing Settings",
+  "config.section.minigame": "Fishing Minigame Settings"
+} 

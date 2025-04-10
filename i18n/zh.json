@@ -11,10 +11,10 @@
   "config.enable-skip-fish-showing.tooltip": "启用后，跳过钓到鱼后的展示动作",
   "config.min-stamina-for-auto-fishing": "自动钓鱼最低体力要求",
   "config.min-stamina-for-auto-fishing.tooltip": "当体力低于此值时，自动钓鱼功能将被禁用",
-  "config.min-catch-count-for-skip-fishing": "跳过钓鱼小游戏所需捕获次数",
-  "config.min-catch-count-for-skip-fishing.tooltip": "当某种鱼的捕获次数达到此值时，将自动跳过钓鱼小游戏",
-  "config.min-perfect-count-for-skip-fishing": "跳过钓鱼小游戏所需完美捕获次数",
-  "config.min-perfect-count-for-skip-fishing.tooltip": "当某种鱼的完美捕获次数达到此值时，将自动跳过钓鱼小游戏",
+  "config.min-catch-count-for-skip-minigame": "跳过钓鱼小游戏所需捕获次数",
+  "config.min-catch-count-for-skip-minigame.tooltip": "当某种鱼的捕获次数达到此值时，将自动跳过钓鱼小游戏",
+  "config.min-perfect-count-for-skip-minigame": "跳过钓鱼小游戏所需完美捕获次数",
+  "config.min-perfect-count-for-skip-minigame.tooltip": "当某种鱼的完美捕获次数达到此值时，将自动跳过钓鱼小游戏",
   "fishing.start": "自动钓鱼已启用",
   "fishing.stop": "自动钓鱼已禁用",
   "fishing.low_stamina": "自动钓鱼已禁用：体力不足",
@@ -25,5 +25,7 @@
   "config.fish-counter.catch-count": "捕获次数：",
   "config.fish-counter.perfect-count": "完美捕获次数：",
   "bobber-bar.familiar": "你抓到了一条熟悉的{fishName}！",
-  "bobber-bar.needed": "你还需要{catchNeeded}次捕获和{perfectNeeded}次完美捕获才能跳过{fishName}的钓鱼小游戏。"
+  "bobber-bar.needed": "你还需要{catchNeeded}次捕获和{perfectNeeded}次完美捕获才能跳过{fishName}的钓鱼小游戏。",
+  "config.section.auto-fishing": "自动钓鱼设置",
+  "config.section.minigame": "钓鱼小游戏设置"
 } 
