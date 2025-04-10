@@ -28,8 +28,8 @@
   "config.fish-counter.unknown-fish": "未知鱼类",
   "config.fish-counter.catch-count": "捕获次数：",
   "config.fish-counter.perfect-count": "完美捕获次数：",
-  "bobber-bar.familiar": "你抓到了一条熟悉的{fishName}！",
-  "bobber-bar.needed": "你还需要{catchNeeded}次捕获和{perfectNeeded}次完美捕获才能跳过{fishName}的钓鱼小游戏",
+  "bobber-bar.familiar": "你抓到了一条熟悉的{{fishName}}！",
+  "bobber-bar.needed": "你还需要{catchNeeded}次捕获和{{perfectNeeded}}次完美捕获才能跳过{{fishName}}的钓鱼小游戏",
   "config.section.auto-fishing": "自动钓鱼设置",
   "config.section.minigame": "钓鱼小游戏设置"
 }

@@ -28,8 +28,8 @@
   "config.fish-counter.unknown-fish": "Unknown Fish",
   "config.fish-counter.catch-count": "Catch Count: ",
   "config.fish-counter.perfect-count": "Perfect Catch Count: ",
-  "bobber-bar.familiar": "You caught a familiar {fishName}!",
-  "bobber-bar.needed": "You need {catchNeeded} more catches and {perfectNeeded} perfect catches to skip fishing minigame for {fishName}.",
+  "bobber-bar.familiar": "You caught a familiar {{fishName}}!",
+  "bobber-bar.needed": "You need {{catchNeeded}} more catches and {{perfectNeeded}} perfect catches to skip fishing minigame for {{fishName}}.",
   "config.section.auto-fishing": "Auto-Fishing Settings",
   "config.section.minigame": "Fishing Minigame Settings"
 }
