@@ -50,11 +50,7 @@ internal sealed partial class ModEntry
         // Remove from counter
         IncrFishCounter(bobberBar.whichFish, bobberBar.perfect, -1);
 
-        Game1.addHUDMessage(HUDMessage.ForCornerTextbox(
-            Helper.Translation.Get("bobber-bar.familiar",
-                new { fishName = ItemRegistry.Create(bobberBar.whichFish).DisplayName }
-            )
-        ));
+        Game1.addHUDMessage(HUDMessage.ForCornerTextbox(Helper.Translation.Get("bobber-bar.familiar")));
     }
 
 
