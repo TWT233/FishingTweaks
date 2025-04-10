@@ -1,0 +1,78 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g. 1.0.0)'
+        required: true
+        default: ''
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+    - name: Get version
+      id: get_version
+      run: |
+        if ("${{ github.event_name }}" -eq "push") {
+          $VERSION = "${{ github.ref_name }}".Substring(1)  # Remove 'v' prefix
+        } else {
+          $VERSION = "${{ github.event.inputs.version }}"
+        }
+        echo "VERSION=$VERSION" >> $env:GITHUB_OUTPUT
+      shell: pwsh
+      
+    - name: Create release package
+      run: |
+        $VERSION = "${{ steps.get_version.outputs.VERSION }}"
+        $RELEASE_DIR = "FishingTweaks-$VERSION"
+        
+        # Create release directory
+        New-Item -Path $RELEASE_DIR -ItemType Directory
+        
+        # Copy mod files
+        Copy-Item -Path "bin\Release\net6.0\FishingTweaks.dll" -Destination "$RELEASE_DIR\"
+        Copy-Item -Path "bin\Release\net6.0\FishingTweaks.pdb" -Destination "$RELEASE_DIR\"
+        Copy-Item -Path "manifest.json" -Destination "$RELEASE_DIR\"
+        Copy-Item -Path "i18n" -Destination "$RELEASE_DIR\" -Recurse
+        
+        # Update version in manifest.json
+        $manifest = Get-Content "$RELEASE_DIR\manifest.json" | ConvertFrom-Json
+        $manifest.Version = $VERSION
+        $manifest | ConvertTo-Json -Depth 10 | Set-Content "$RELEASE_DIR\manifest.json"
+        
+        # Create zip file
+        Compress-Archive -Path "$RELEASE_DIR\*" -DestinationPath "FishingTweaks-$VERSION.zip"
+      shell: pwsh
+      
+    - name: Create GitHub Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        name: FishingTweaks v${{ steps.get_version.outputs.VERSION }}
+        tag_name: v${{ steps.get_version.outputs.VERSION }}
+        draft: false
+        prerelease: false
+        files: FishingTweaks-${{ steps.get_version.outputs.VERSION }}.zip
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
