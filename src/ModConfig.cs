@@ -45,6 +45,20 @@ public sealed class ModConfig
     ///     when it breaks, using the first available tackle from the player's inventory.
     /// </summary>
     public bool EnableAutoTackling { get; set; } = true;
+    
+    /// <summary>
+    ///     Whether to enable skipping the fishing minigame.
+    ///     When enabled and conditions are met, the mod will automatically complete
+    ///     the fishing minigame without player interaction.
+    /// </summary>
+    public bool EnableSkipMinigame { get; set; } = true;
+    
+    /// <summary>
+    ///     Whether to enable automatic casting of the fishing rod.
+    ///     When enabled, the mod will automatically cast the fishing rod
+    ///     when the player is holding a fishing rod.
+    /// </summary>
+    public bool EnableAutoCasting { get; set; } = true;
 
     /// <summary>
     ///     The minimum stamina required for auto-fishing.
@@ -52,10 +66,19 @@ public sealed class ModConfig
     ///     and a notification will be shown.
     /// </summary>
     public int MinStaminaForAutoFishing { get; set; } = 10;
-
-
+    
+    /// <summary>
+    ///     The minimum number of times a specific fish must be caught
+    ///     before the fishing minigame can be skipped for that fish.
+    ///     This helps ensure players have experience with catching each fish type.
+    /// </summary>
     public int MinCatchCountForSkipFishing { get; set; } = 5;
 
+    /// <summary>
+    ///     The minimum number of perfect catches required for a specific fish
+    ///     before the fishing minigame can be skipped for that fish.
+    ///     Perfect catches indicate mastery of catching that fish type.
+    /// </summary>
     public int MinPerfectCountForSkipFishing { get; set; }
 
 
@@ -106,6 +129,14 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.toggle-auto-fishing"),
             () => Helper.Translation.Get("config.toggle-auto-fishing.tooltip")
         );
+        
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.EnableAutoCasting,
+            value => _config.EnableAutoCasting = value,
+            () => Helper.Translation.Get("config.enable-auto-casting"),
+            () => Helper.Translation.Get("config.enable-auto-casting.tooltip")
+        );
 
         configMenu.AddNumberOption(
             ModManifest,
@@ -142,6 +173,14 @@ internal sealed partial class ModEntry
         configMenu.AddSectionTitle(
             ModManifest,
             () => Helper.Translation.Get("config.section.minigame")
+        );
+        
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.EnableSkipMinigame,
+            value => _config.EnableSkipMinigame = value,
+            () => Helper.Translation.Get("config.enable-skip-minigame"),
+            () => Helper.Translation.Get("config.enable-skip-minigame.tooltip")
         );
         
         configMenu.AddNumberOption(

@@ -15,6 +15,10 @@
   "config.min-catch-count-for-skip-minigame.tooltip": "When a fish's catch count reaches this value, the fishing minigame will be automatically skipped.",
   "config.min-perfect-count-for-skip-minigame": "Minimum Perfect Count for Skip Fishing",
   "config.min-perfect-count-for-skip-minigame.tooltip": "When a fish's perfect catch count reaches this value, the fishing minigame will be automatically skipped.",
+  "config.enable-auto-casting": "Enable Auto-Casting",
+  "config.enable-auto-casting.tooltip": "When enabled, automatically casts the fishing rod.",
+  "config.enable-skip-minigame": "Enable Skip Minigame",
+  "config.enable-skip-minigame.tooltip": "When enabled, skips the fishing minigame for fish that meet the catch count requirements.",
   "fishing.start": "Auto-fishing enabled",
   "fishing.stop": "Auto-fishing disabled",
   "fishing.low_stamina": "Not enough stamina for auto-fishing",
@@ -28,4 +32,4 @@
   "bobber-bar.needed": "You need {catchNeeded} more catches and {perfectNeeded} perfect catches to skip fishing minigame for {fishName}.",
   "config.section.auto-fishing": "Auto-Fishing Settings",
   "config.section.minigame": "Fishing Minigame Settings"
-} 
+}

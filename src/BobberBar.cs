@@ -23,6 +23,8 @@ internal sealed partial class ModEntry
         // Check if the new menu is the fishing minigame
         if (e.NewMenu is not BobberBar bobberBar) return;
 
+        if (!_config.EnableSkipMinigame) return;
+
         if (!_config.SatisfiedSkipMinigame(bobberBar.whichFish))
         {
             _config.FishCounter.CurrentCount(bobberBar.whichFish, out var catchCount, out var perfectCount);
