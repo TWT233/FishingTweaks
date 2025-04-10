@@ -1,7 +1,6 @@
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Menus;
-using StardewValley.Tools;
 
 namespace FishingTweaks;
 
@@ -24,7 +23,21 @@ internal sealed partial class ModEntry
         // Check if the new menu is the fishing minigame
         if (e.NewMenu is not BobberBar bobberBar) return;
 
-        if (!_config.SatisfiedSkipFishing(bobberBar.whichFish)) return;
+        if (!_config.SatisfiedSkipFishing(bobberBar.whichFish))
+        {
+            _config.FishCounter.CurrentCount(bobberBar.whichFish, out var catchCount, out var perfectCount);
+            Game1.addHUDMessage(HUDMessage.ForCornerTextbox(
+                Helper.Translation.Get("bobber-bar.needed",
+                    new
+                    {
+                        fishName = ItemRegistry.Create(bobberBar.whichFish).DisplayName,
+                        catchNeeded = Math.Max(_config.MinCatchCountForSkipFishing - catchCount, 0),
+                        perfectNeeded = Math.Max(_config.MinPerfectCountForSkipFishing - perfectCount, 0),
+                    }
+                )
+            ));
+            return;
+        }
 
         // Set the progress bar to maximum (2.0 is the value that triggers a catch(>=1.0f))
         bobberBar.distanceFromCatching = 2.0f;
@@ -34,6 +47,12 @@ internal sealed partial class ModEntry
 
         // Remove from counter
         IncrFishCounter(bobberBar.whichFish, bobberBar.perfect, -1);
+
+        Game1.addHUDMessage(HUDMessage.ForCornerTextbox(
+            Helper.Translation.Get("bobber-bar.familiar",
+                new { fishName = ItemRegistry.Create(bobberBar.whichFish).DisplayName }
+            )
+        ));
     }
 
 
@@ -44,7 +63,5 @@ internal sealed partial class ModEntry
         if (bobberBar.distanceFromCatching < 0.5f) return; // missed
 
         IncrFishCounter(bobberBar.whichFish, bobberBar.perfect);
-        Game1.addHUDMessage(
-            HUDMessage.ForCornerTextbox($"{ItemRegistry.Create(bobberBar.whichFish).DisplayName} incr"));
     }
 }

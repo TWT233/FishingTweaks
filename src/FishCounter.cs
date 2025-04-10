@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using StardewModdingAPI;
 using StardewValley;
 
@@ -19,16 +18,19 @@ public class FishCounter
         {
             var fish = ItemRegistry.Create(id, allowNull: true);
 
-            var fishName = fish is null
-                ? $"{helper.Translation.Get("config.fish-counter.unknown-fish")} @ {id}"
-                : fish.DisplayName;
-            var catchCountMsg = $"{helper.Translation.Get("config.fish-counter.catch-count")}{entry.CatchCount}";
-            var perfectCountMsg = $"{helper.Translation.Get("config.fish-counter.perfect-count")}{entry.PerfectCount}";
-
             configMenu.AddParagraph(
                 modManifest,
-                () => $"{fishName} - {catchCountMsg}  {perfectCountMsg}"
-            );
+                () =>
+                {
+                    var fishName = fish is null
+                        ? $"{helper.Translation.Get("config.fish-counter.unknown-fish")} @ {id}"
+                        : fish.DisplayName;
+                    var catchCountMsg =
+                        $"{helper.Translation.Get("config.fish-counter.catch-count")}{entry.CatchCount}";
+                    var perfectCountMsg =
+                        $"{helper.Translation.Get("config.fish-counter.perfect-count")}{entry.PerfectCount}";
+                    return $"{fishName} - {catchCountMsg} | {perfectCountMsg}";
+                });
         }
     }
 
@@ -38,6 +40,13 @@ public class FishCounter
         entry.CatchCount += increment;
         if (isPerfect) entry.PerfectCount += increment;
         Records[whichFish] = entry;
+    }
+
+    public void CurrentCount(string whichFish, out int catchCount, out int perfectCount)
+    {
+        var entry = Records.TryGetValue(whichFish, out var record) ? record : new Entry(whichFish, 0, 0);
+        catchCount = entry.CatchCount;
+        perfectCount = entry.PerfectCount;
     }
 
     public bool Satisfied(string whichFish, int catchRequired, int perfectRequired)

@@ -56,7 +56,7 @@ public sealed class ModConfig
 
     public int MinCatchCountForSkipFishing { get; set; } = 5;
 
-    public int MinPerfectCountForSkipFishing { get; set; } = 0;
+    public int MinPerfectCountForSkipFishing { get; set; }
 
 
     public bool SatisfiedSkipFishing(string whichFish)
@@ -101,12 +101,12 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.toggle-auto-fishing.tooltip")
         );
 
-        configMenu.AddBoolOption(
+        configMenu.AddNumberOption(
             ModManifest,
-            () => _config.EnableSkipFishShowing,
-            value => _config.EnableSkipFishShowing = value,
-            () => Helper.Translation.Get("config.enable-skip-fish-showing"),
-            () => Helper.Translation.Get("config.enable-skip-fish-showing.tooltip")
+            () => _config.MinStaminaForAutoFishing,
+            value => _config.MinStaminaForAutoFishing = value,
+            () => Helper.Translation.Get("config.min-stamina-for-auto-fishing"),
+            () => Helper.Translation.Get("config.min-stamina-for-auto-fishing.tooltip")
         );
 
         configMenu.AddBoolOption(
@@ -133,12 +133,12 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.enable-auto-tackling.tooltip")
         );
 
-        configMenu.AddNumberOption(
+        configMenu.AddBoolOption(
             ModManifest,
-            () => _config.MinStaminaForAutoFishing,
-            value => _config.MinStaminaForAutoFishing = value,
-            () => Helper.Translation.Get("config.min-stamina-for-auto-fishing"),
-            () => Helper.Translation.Get("config.min-stamina-for-auto-fishing.tooltip")
+            () => _config.EnableSkipFishShowing,
+            value => _config.EnableSkipFishShowing = value,
+            () => Helper.Translation.Get("config.enable-skip-fish-showing"),
+            () => Helper.Translation.Get("config.enable-skip-fish-showing.tooltip")
         );
 
         configMenu.AddNumberOption(
