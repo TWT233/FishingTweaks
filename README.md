@@ -1,4 +1,4 @@
-# FishingTweaks - Stardew Valley钓鱼辅助模组
+# FishingTweaks
 
 [English](#english) | [中文](#中文)
 
