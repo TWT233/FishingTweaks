@@ -72,7 +72,7 @@ public sealed class ModConfig
     ///     before the fishing minigame can be skipped for that fish.
     ///     This helps ensure players have experience with catching each fish type.
     /// </summary>
-    public int MinCatchCountForSkipFishing { get; set; } = 5;
+    public int MinCatchCountForSkipFishing { get; set; } = 3;
 
     /// <summary>
     ///     The minimum number of perfect catches required for a specific fish
