@@ -4,20 +4,9 @@ using StardewValley;
 
 namespace FishingTweaks;
 
-internal class FishCounterConfig
+public class FishCounter
 {
-    private SortedDictionary<string, Entry>? _records;
-
-    public string Serialize()
-    {
-        return JsonConvert.SerializeObject(_records);
-    }
-
-    public static FishCounterConfig? Deserialize(string value)
-    {
-        var r = JsonConvert.DeserializeObject(value);
-        return r is SortedDictionary<string, Entry> rr ? new FishCounterConfig { _records = rr } : null;
-    }
+    public SortedDictionary<string, Entry> Records = new();
 
     public void ArrangeMenu(IManifest modManifest, IModHelper helper, IGenericModConfigMenuApi configMenu)
     {
@@ -26,16 +15,7 @@ internal class FishCounterConfig
             () => helper.Translation.Get("config.fish-counter.title")
         );
 
-        if (_records is null)
-        {
-            configMenu.AddParagraph(
-                modManifest,
-                () => helper.Translation.Get("config.fish-counter.no-records")
-            );
-            return;
-        }
-
-        foreach (var (id, entry) in _records)
+        foreach (var (id, entry) in Records)
         {
             var fish = ItemRegistry.Create(id, allowNull: true);
 
@@ -52,16 +32,22 @@ internal class FishCounterConfig
         }
     }
 
-    public void Incr(string whichFish, bool isPerfect)
+    public void Incr(string whichFish, bool isPerfect, int increment = 1)
     {
-        if (_records is null) return;
-
-        var entry = _records.TryGetValue(whichFish, out var record) ? record : new Entry(whichFish, 0, 0);
-        entry.Incr(isPerfect);
-        _records[whichFish] = entry;
+        var entry = Records.TryGetValue(whichFish, out var record) ? record : new Entry(whichFish, 0, 0);
+        entry.CatchCount += increment;
+        if (isPerfect) entry.PerfectCount += increment;
+        Records[whichFish] = entry;
     }
 
-    private class Entry
+    public bool Satisfied(string whichFish, int catchRequired, int perfectRequired)
+    {
+        if (!Records.TryGetValue(whichFish, out var entry)) return false;
+
+        return entry.CatchCount >= catchRequired && entry.PerfectCount >= perfectRequired;
+    }
+
+    public class Entry
     {
         public Entry(string id, int catchCount, int perfectCount)
         {
@@ -70,20 +56,14 @@ internal class FishCounterConfig
             PerfectCount = perfectCount;
         }
 
-        public string Id { get; private set; }
-        public int CatchCount { get; private set; }
-        public int PerfectCount { get; private set; }
+        public string Id { get; set; }
+        public int CatchCount { get; set; }
+        public int PerfectCount { get; set; }
 
         public void Incr(bool isPerfect)
         {
             CatchCount++;
             if (isPerfect) PerfectCount++;
-        }
-
-        public void Reset()
-        {
-            CatchCount = 0;
-            PerfectCount = 0;
         }
     }
 }

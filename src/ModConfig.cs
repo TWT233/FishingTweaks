@@ -10,7 +10,7 @@ namespace FishingTweaks;
 /// </summary>
 public sealed class ModConfig
 {
-    private FishCounterConfig? _fishCounter = new();
+    public FishCounter FishCounter = new();
 
     /// <summary>
     ///     The key to toggle auto-fishing functionality.
@@ -54,10 +54,14 @@ public sealed class ModConfig
     public int MinStaminaForAutoFishing { get; set; } = 10;
 
 
-    public string FishCounter
+    public int MinCatchCountForSkipFishing { get; set; } = 5;
+
+    public int MinPerfectCountForSkipFishing { get; set; } = 0;
+
+
+    public bool SatisfiedSkipFishing(string whichFish)
     {
-        get => _fishCounter?.Serialize() ?? "";
-        set => _fishCounter = FishCounterConfig.Deserialize(value);
+        return FishCounter.Satisfied(whichFish, MinCatchCountForSkipFishing, MinPerfectCountForSkipFishing);
     }
 }
 
@@ -74,7 +78,7 @@ internal sealed partial class ModEntry
     /// </summary>
     /// <param name="sender">The event sender.</param>
     /// <param name="e">The event data.</param>
-    private void SetupGMCMOnGameLaunched(object? sender, GameLaunchedEventArgs e)
+    private void SetupGMCMOnGameLaunched(object? sender, GameLaunchedEventArgs? e)
     {
         // Get Generic Mod Config Menu's API (if it's installed)
         var configMenu = Helper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu");
@@ -136,5 +140,33 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.min-stamina-for-auto-fishing"),
             () => Helper.Translation.Get("config.min-stamina-for-auto-fishing.tooltip")
         );
+
+        configMenu.AddNumberOption(
+            ModManifest,
+            () => _config.MinCatchCountForSkipFishing,
+            value => _config.MinCatchCountForSkipFishing = value,
+            () => Helper.Translation.Get("config.min-catch-count-for-skip-fishing"),
+            () => Helper.Translation.Get("config.min-catch-count-for-skip-fishing.tooltip")
+        );
+
+        configMenu.AddNumberOption(
+            ModManifest,
+            () => _config.MinPerfectCountForSkipFishing,
+            value => _config.MinPerfectCountForSkipFishing = value,
+            () => Helper.Translation.Get("config.min-perfect-count-for-skip-fishing"),
+            () => Helper.Translation.Get("config.min-perfect-count-for-skip-fishing.tooltip")
+        );
+
+        _config.FishCounter.ArrangeMenu(ModManifest, Helper, configMenu);
+    }
+
+    private void IncrFishCounter(string whichFish, bool isPerfect, int increment = 1)
+    {
+        _config.FishCounter.Incr(whichFish, isPerfect, increment);
+        Helper.WriteConfig(_config);
+
+        Helper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu")
+            ?.Unregister(ModManifest);
+        SetupGMCMOnGameLaunched(null, null);
     }
 }

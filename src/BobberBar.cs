@@ -1,5 +1,7 @@
 using StardewModdingAPI.Events;
+using StardewValley;
 using StardewValley.Menus;
+using StardewValley.Tools;
 
 namespace FishingTweaks;
 
@@ -17,15 +19,32 @@ internal sealed partial class ModEntry
     /// </summary>
     /// <param name="sender">The event sender.</param>
     /// <param name="e">The event data.</param>
-    private static void SkipFishingOnMenuChanged(object? sender, MenuChangedEventArgs e)
+    private void SkipFishingOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
         // Check if the new menu is the fishing minigame
         if (e.NewMenu is not BobberBar bobberBar) return;
+
+        if (!_config.SatisfiedSkipFishing(bobberBar.whichFish)) return;
 
         // Set the progress bar to maximum (2.0 is the value that triggers a catch(>=1.0f))
         bobberBar.distanceFromCatching = 2.0f;
 
         // Catch treasure
         bobberBar.treasureCaught = bobberBar.treasure;
+
+        // Remove from counter
+        IncrFishCounter(bobberBar.whichFish, bobberBar.perfect, -1);
+    }
+
+
+    private void RecordFishingOnMenuChanged(object? sender, MenuChangedEventArgs e)
+    {
+        if (e.OldMenu is not BobberBar bobberBar) return;
+        if (!bobberBar.handledFishResult) return;
+        if (bobberBar.distanceFromCatching < 0.5f) return; // missed
+
+        IncrFishCounter(bobberBar.whichFish, bobberBar.perfect);
+        Game1.addHUDMessage(
+            HUDMessage.ForCornerTextbox($"{ItemRegistry.Create(bobberBar.whichFish).DisplayName} incr"));
     }
 }
