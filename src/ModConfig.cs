@@ -45,14 +45,14 @@ public sealed class ModConfig
     ///     when it breaks, using the first available tackle from the player's inventory.
     /// </summary>
     public bool EnableAutoTackling { get; set; } = true;
-    
+
     /// <summary>
     ///     Whether to enable skipping the fishing minigame.
     ///     When enabled and conditions are met, the mod will automatically complete
     ///     the fishing minigame without player interaction.
     /// </summary>
     public bool EnableSkipMinigame { get; set; } = true;
-    
+
     /// <summary>
     ///     Whether to enable automatic casting of the fishing rod.
     ///     When enabled, the mod will automatically cast the fishing rod
@@ -66,7 +66,7 @@ public sealed class ModConfig
     ///     and a notification will be shown.
     /// </summary>
     public int MinStaminaForAutoFishing { get; set; } = 10;
-    
+
     /// <summary>
     ///     The minimum number of times a specific fish must be caught
     ///     before the fishing minigame can be skipped for that fish.
@@ -129,7 +129,7 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.toggle-auto-fishing"),
             () => Helper.Translation.Get("config.toggle-auto-fishing.tooltip")
         );
-        
+
         configMenu.AddBoolOption(
             ModManifest,
             () => _config.EnableAutoCasting,
@@ -174,7 +174,7 @@ internal sealed partial class ModEntry
             ModManifest,
             () => Helper.Translation.Get("config.section.minigame")
         );
-        
+
         configMenu.AddBoolOption(
             ModManifest,
             () => _config.EnableSkipMinigame,
@@ -182,7 +182,7 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.enable-skip-minigame"),
             () => Helper.Translation.Get("config.enable-skip-minigame.tooltip")
         );
-        
+
         configMenu.AddNumberOption(
             ModManifest,
             () => _config.MinCatchCountForSkipFishing,

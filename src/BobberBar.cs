@@ -34,7 +34,7 @@ internal sealed partial class ModEntry
                     {
                         fishName = ItemRegistry.Create(bobberBar.whichFish).DisplayName,
                         catchNeeded = Math.Max(_config.MinCatchCountForSkipFishing - catchCount, 0),
-                        perfectNeeded = Math.Max(_config.MinPerfectCountForSkipFishing - perfectCount, 0),
+                        perfectNeeded = Math.Max(_config.MinPerfectCountForSkipFishing - perfectCount, 0)
                     }
                 )
             ));

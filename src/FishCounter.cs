@@ -4,17 +4,17 @@ using StardewValley;
 namespace FishingTweaks;
 
 /// <summary>
-/// Tracks and manages statistics for fish catches in the game, including total catches and perfect catches.
+///     Tracks and manages statistics for fish catches in the game, including total catches and perfect catches.
 /// </summary>
 public class FishCounter
 {
     /// <summary>
-    /// Dictionary storing catch records for each fish type, indexed by fish ID.
+    ///     Dictionary storing catch records for each fish type, indexed by fish ID.
     /// </summary>
     public SortedDictionary<string, Entry> Records = new();
 
     /// <summary>
-    /// Configures and displays fish catch statistics in the Generic Mod Config Menu.
+    ///     Configures and displays fish catch statistics in the Generic Mod Config Menu.
     /// </summary>
     /// <param name="modManifest">The mod's manifest information.</param>
     /// <param name="helper">SMAPI's mod helper instance.</param>
@@ -47,7 +47,7 @@ public class FishCounter
     }
 
     /// <summary>
-    /// Increments the catch count and perfect catch count for a specific fish.
+    ///     Increments the catch count and perfect catch count for a specific fish.
     /// </summary>
     /// <param name="whichFish">The ID of the fish being caught.</param>
     /// <param name="isPerfect">Whether the catch was perfect.</param>
@@ -61,7 +61,7 @@ public class FishCounter
     }
 
     /// <summary>
-    /// Retrieves the current catch counts for a specific fish.
+    ///     Retrieves the current catch counts for a specific fish.
     /// </summary>
     /// <param name="whichFish">The ID of the fish to check.</param>
     /// <param name="catchCount">The total number of catches for this fish.</param>
@@ -74,7 +74,7 @@ public class FishCounter
     }
 
     /// <summary>
-    /// Checks if the catch requirements for a specific fish have been met.
+    ///     Checks if the catch requirements for a specific fish have been met.
     /// </summary>
     /// <param name="whichFish">The ID of the fish to check.</param>
     /// <param name="catchRequired">The required number of total catches.</param>
@@ -88,12 +88,12 @@ public class FishCounter
     }
 
     /// <summary>
-    /// Represents a single fish's catch statistics.
+    ///     Represents a single fish's catch statistics.
     /// </summary>
     public class Entry
     {
         /// <summary>
-        /// Initializes a new instance of the Entry class with the specified catch statistics.
+        ///     Initializes a new instance of the Entry class with the specified catch statistics.
         /// </summary>
         /// <param name="id">The ID of the fish.</param>
         /// <param name="catchCount">The initial total catch count.</param>
@@ -111,23 +111,13 @@ public class FishCounter
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the total number of times this fish has been caught.
+        ///     Gets or sets the total number of times this fish has been caught.
         /// </summary>
         public int CatchCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of times this fish has been caught perfectly.
+        ///     Gets or sets the number of times this fish has been caught perfectly.
         /// </summary>
         public int PerfectCount { get; set; }
-
-        /// <summary>
-        /// Increments the catch counts for this fish.
-        /// </summary>
-        /// <param name="isPerfect">Whether the catch was perfect.</param>
-        public void Incr(bool isPerfect)
-        {
-            CatchCount++;
-            if (isPerfect) PerfectCount++;
-        }
     }
 }
