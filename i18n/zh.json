@@ -28,8 +28,8 @@
   "fishing.start": "自动钓鱼已启用",
   "fishing.stop": "自动钓鱼已禁用",
   "fishing.low_stamina": "自动钓鱼已禁用：体力不足",
-  "baiting.applied": "已补充鱼饵：",
-  "tackling.applied": "已补充钓具：",
+  "baiting.applied": "已补充鱼饵",
+  "tackling.applied": "已补充钓具",
   "bobber-bar.familiar": "你熟悉这种鱼！",
-  "bobber-bar.needed": "还需要{{catchNeeded}}次捕获和{{perfectNeeded}}次完美捕获以跳过{{fishName}}的钓鱼小游戏"
+  "bobber-bar.needed": "还需要{{catchNeeded}}次捕获和{{perfectNeeded}}次完美捕获来跳过小游戏"
 }

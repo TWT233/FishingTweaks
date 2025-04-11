@@ -31,7 +31,8 @@ internal sealed partial class ModEntry
         Game1.player.removeItemFromInventory(bait);
 
         // Display a notification to the player
-        var msg = Helper.Translation.Get("baiting.applied");
-        Game1.addHUDMessage(HUDMessage.ForCornerTextbox($"{msg}{bait.DisplayName} x {bait.Stack}"));
+        var msg = HUDMessage.ForItemGained(bait, bait.Stack, "auto-baiting");
+        msg.message = Helper.Translation.Get("baiting.applied");
+        Game1.addHUDMessage(msg);
     }
 }

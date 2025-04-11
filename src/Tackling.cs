@@ -39,8 +39,9 @@ internal sealed partial class ModEntry
             Game1.player.removeItemFromInventory(tackle);
 
             // Display a notification to the player about the applied tackle
-            var msg = Helper.Translation.Get("tackling.applied");
-            Game1.addHUDMessage(HUDMessage.ForCornerTextbox($"{msg}{tackle.DisplayName}"));
+            var msg = HUDMessage.ForItemGained(tackle, tackle.Stack, "auto-tackling");
+            msg.message = Helper.Translation.Get("tackling.applied");
+            Game1.addHUDMessage(msg);
         }
     }
 }

@@ -28,8 +28,8 @@
   "fishing.start": "Auto-fishing enabled",
   "fishing.stop": "Auto-fishing disabled",
   "fishing.low_stamina": "Not enough stamina for auto-fishing",
-  "baiting.applied": "Auto applied bait: ",
-  "tackling.applied": "Auto applied tackle: ",
+  "baiting.applied": "Auto applied bait",
+  "tackling.applied": "Auto applied tackle",
   "bobber-bar.familiar": "You are familiar with it!",
-  "bobber-bar.needed": "{{catchNeeded}} catches + {{perfectNeeded}} perfect more to skip minigame for {{fishName}}."
+  "bobber-bar.needed": "{{catchNeeded}} catches + {{perfectNeeded}} perfect more to skip"
 }

@@ -23,21 +23,21 @@ internal sealed partial class ModEntry
         if (e.NewMenu is not BobberBar bobberBar) return;
         if (_autoFishing is false) return;
         if (!_config.EnableSkipMinigame) return;
-        
+
+        var msg = HUDMessage.ForItemGained(ItemRegistry.Create(bobberBar.whichFish), 1, "minigame");
+
         if (!_config.SatisfiedSkipMinigame(bobberBar.whichFish))
         {
             _config.FishCounter.CurrentCount(bobberBar.whichFish, out var catchCount, out var perfectCount);
-            var msg = HUDMessage.ForCornerTextbox(
-                Helper.Translation.Get("bobber-bar.needed",
-                    new
-                    {
-                        fishName = ItemRegistry.Create(bobberBar.whichFish).DisplayName,
-                        catchNeeded = Math.Max(_config.MinCatchCountForSkipFishing - catchCount, 0),
-                        perfectNeeded = Math.Max(_config.MinPerfectCountForSkipFishing - perfectCount, 0)
-                    }
-                )
+
+            msg.message = Helper.Translation.Get("bobber-bar.needed",
+                new
+                {
+                    fishName = ItemRegistry.Create(bobberBar.whichFish).DisplayName,
+                    catchNeeded = Math.Max(_config.MinCatchCountForSkipFishing - catchCount, 0),
+                    perfectNeeded = Math.Max(_config.MinPerfectCountForSkipFishing - perfectCount, 0)
+                }
             );
-            msg.timeLeft = 10000f;
             Game1.addHUDMessage(msg);
             return;
         }
@@ -51,7 +51,8 @@ internal sealed partial class ModEntry
         // Remove from counter
         IncrFishCounter(bobberBar.whichFish, bobberBar.perfect, -1);
 
-        Game1.addHUDMessage(HUDMessage.ForCornerTextbox(Helper.Translation.Get("bobber-bar.familiar")));
+        msg.message = Helper.Translation.Get("bobber-bar.familiar");
+        Game1.addHUDMessage(msg);
     }
 
 
