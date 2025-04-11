@@ -47,6 +47,13 @@ public sealed class ModConfig
     public bool EnableAutoTackling { get; set; } = true;
 
     /// <summary>
+    ///     Whether to enable auto-hooking.
+    ///     When enabled, the mod will automatically apply the Auto-Hook enchantment to the fishing rod,
+    ///     which automatically hooks fish when they bite without requiring player input.
+    /// </summary>
+    public bool EnableAutoHook { get; set; } = true;
+
+    /// <summary>
     ///     Whether to enable skipping the fishing minigame.
     ///     When enabled and conditions are met, the mod will automatically complete
     ///     the fishing minigame without player interaction.
@@ -174,6 +181,14 @@ internal sealed partial class ModEntry
             value => _config.EnableAutoTackling = value,
             () => Helper.Translation.Get("config.enable-auto-tackling"),
             () => Helper.Translation.Get("config.enable-auto-tackling.tooltip")
+        );
+
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.EnableAutoHook,
+            value => _config.EnableAutoHook = value,
+            () => Helper.Translation.Get("config.enable-auto-hook"),
+            () => Helper.Translation.Get("config.enable-auto-hook.tooltip")
         );
 
         configMenu.AddBoolOption(

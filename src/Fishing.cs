@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.Enchantments;
 using StardewValley.Tools;
 
 namespace FishingTweaks;
@@ -57,9 +58,25 @@ internal sealed partial class ModEntry
         AutoBaiting(fishingRod);
         AutoTackling(fishingRod);
         AutoCasting(fishingRod);
+
+        ApplyAutoHook(fishingRod);
         SkipFishShowing(fishingRod);
     }
 
+    /// <summary>
+    ///     Automatically applies the auto-hook enchantment to the fishing rod.
+    ///     This method adds the AutoHookEnchantment to the fishing rod if it doesn't already have one,
+    ///     which allows fish to be automatically hooked when they bite, without requiring player input.
+    ///     The method only runs when auto-fishing is enabled and the EnableAutoHook configuration option is set to true.
+    /// </summary>
+    /// <param name="fishingRod">The fishing rod to apply the auto-hook enchantment to.</param>
+    private void ApplyAutoHook(FishingRod fishingRod)
+    {
+        if (!_config.EnableAutoHook) return;
+        // Apply auto hook enchantment for auto pull
+        if (!fishingRod.hasEnchantmentOfType<AutoHookEnchantment>())
+            fishingRod.enchantments.Add(new AutoHookEnchantment());
+    }
 
     /// <summary>
     ///     Skips the fish showing animation after catching a fish.

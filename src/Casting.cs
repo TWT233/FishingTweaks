@@ -1,5 +1,4 @@
 using StardewValley;
-using StardewValley.Enchantments;
 using StardewValley.Menus;
 using StardewValley.Tools;
 
@@ -34,10 +33,6 @@ internal sealed partial class ModEntry
         // Cast the fishing rod at the player's current position
         fishingRod.beginUsing(Game1.currentLocation, 0, 0, Game1.player);
         fishingRod.castingPower = 1.0f;
-
-        // Apply auto hook enchantment for auto pull
-        if (!fishingRod.hasEnchantmentOfType<AutoHookEnchantment>())
-            fishingRod.enchantments.Add(new AutoHookEnchantment());
     }
 
     /// <summary>

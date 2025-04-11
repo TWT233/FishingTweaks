@@ -5,6 +5,8 @@
   "config.enable-auto-baiting.tooltip": "启用后，当钓竿上的鱼饵耗尽时会自动从背包中补充",
   "config.enable-auto-tackling": "启用自动补充钓具",
   "config.enable-auto-tackling.tooltip": "启用后，当钓竿上的钓具损坏时会自动从背包中补充",
+  "config.enable-auto-hook": "启用自动上钩",
+  "config.enable-auto-hook.tooltip": "启用后，会自动为手中的钓竿附魔自动上钩",
   "config.enable-grab-treasure": "启用自动收集宝箱",
   "config.enable-grab-treasure.tooltip": "启用后，会自动将钓鱼宝箱中的物品收集到背包",
   "config.enable-skip-fish-showing": "跳过展示鱼环节",
