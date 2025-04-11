@@ -48,9 +48,6 @@ internal sealed partial class ModEntry
         // Catch treasure
         bobberBar.treasureCaught = bobberBar.treasure;
 
-        // Remove from counter
-        IncrFishCounter(bobberBar.whichFish, bobberBar.perfect, -1);
-
         msg.message = Helper.Translation.Get("bobber-bar.familiar");
         Game1.addHUDMessage(msg);
     }
