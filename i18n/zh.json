@@ -37,5 +37,5 @@
   "baiting.applied": "已补充鱼饵",
   "tackling.applied": "已补充钓具",
   "bobber-bar.familiar": "你熟悉这种鱼！",
-  "bobber-bar.needed": "还需要{{catchNeeded}}次捕获和{{perfectNeeded}}次完美捕获来跳过小游戏"
+  "bobber-bar.needed": "{{catchNeeded}}次捕获或{{perfectNeeded}}次完美来跳过小游戏"
 }

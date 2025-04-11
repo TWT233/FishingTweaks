@@ -92,7 +92,7 @@ public class FishCounter
     {
         var entry = Records.TryGetValue(whichFish, out var record) ? record : new Entry(whichFish, 0, 0);
 
-        return entry.CatchCount >= catchRequired && entry.PerfectCount >= perfectRequired;
+        return entry.CatchCount >= catchRequired || entry.PerfectCount >= perfectRequired;
     }
 
     /// <summary>

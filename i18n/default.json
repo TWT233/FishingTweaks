@@ -37,5 +37,5 @@
   "baiting.applied": "Auto applied bait",
   "tackling.applied": "Auto applied tackle",
   "bobber-bar.familiar": "You are familiar with it!",
-  "bobber-bar.needed": "{{catchNeeded}} catches + {{perfectNeeded}} perfect more to skip"
+  "bobber-bar.needed": "{{catchNeeded}} catches / {{perfectNeeded}} perfect to skip"
 }

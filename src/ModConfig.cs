@@ -100,7 +100,7 @@ public sealed class ModConfig
     ///     before the fishing minigame can be skipped for that fish.
     ///     Perfect catches indicate mastery of catching that fish type.
     /// </summary>
-    public int MinPerfectCountForSkipFishing { get; set; }
+    public int MinPerfectCountForSkipFishing { get; set; } = 1;
 
 
     public bool SatisfiedSkipMinigame(string whichFish)
