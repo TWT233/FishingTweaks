@@ -2,6 +2,8 @@
 
 [English](#english) | [中文](#中文)
 
+---
+
 ## English
 
 ### Description
@@ -12,9 +14,12 @@ skip the fishing minigame after you've caught a specific fish enough times.
 
 ### Features
 
+_all configurable_
+
 - **Auto-Casting**: Automatically casts your fishing rod
 - **Auto-Baiting**: Automatically applies bait from your inventory when depleted
 - **Auto-Tackling**: Automatically replaces broken tackle from your inventory
+- **Auto-Hook**: Automatically apply auto hook enchantment for the rod
 - **Auto-Treasure Collection**: Automatically collects items from fishing treasure chests
 - **Skip Fish Animation**: Skips the animation shown after catching a fish
 - **Skip Fishing Minigame**: Automatically completes the fishing minigame for fish you've caught multiple times
@@ -33,30 +38,10 @@ skip the fishing minigame after you've caught a specific fish enough times.
 The mod can be configured through the `config.json` file or by
 using [Generic Mod Config Menu](https://www.nexusmods.com/stardewvalley/mods/5098) if installed.
 
-#### Main Settings
-
-- **Toggle Auto-Fishing Key**: The key to toggle auto-fishing (default: V)
-- **Enable Auto-Casting**: Automatically casts your fishing rod
-- **Enable Auto-Baiting**: Automatically applies bait when depleted
-- **Enable Auto-Tackling**: Automatically replaces broken tackle
-- **Enable Auto-Grab Treasure**: Automatically collects items from treasure chests
-- **Enable Skip Fish Showing**: Skips the fish showing animation
-- **Minimum Stamina for Auto-Fishing**: Auto-fishing will be disabled when stamina is below this value
-
-#### Fishing Minigame Settings
-
-- **Enable Skip Minigame**: Enables skipping the fishing minigame for familiar fish
-- **Minimum Catch Count**: Required catches before skipping the minigame
-- **Minimum Perfect Count**: Required perfect catches before skipping the minigame
-
 ### Compatibility
 
 - Requires Stardew Valley 1.6+ and SMAPI 4.0.0+
 - Compatible with [Generic Mod Config Menu](https://www.nexusmods.com/stardewvalley/mods/5098) for in-game configuration
-
-### Credits
-
-- Developed by TWT233
 
 ---
 
@@ -68,9 +53,12 @@ FishingTweaks是一个星露谷物语钓鱼辅助模组，通过自动化重复�
 
 ### 功能特点
 
+_所有功能均可修改配置_
+
 - **自动抛竿**：自动投掷钓鱼竿
 - **自动补充鱼饵**：当鱼饵耗尽时自动从背包中补充
 - **自动补充钓具**：当钓具损坏时自动从背包中替换
+- **自动上钩**：自动为钓竿附魔自动上钩
 - **自动收集宝箱**：自动收集钓鱼宝箱中的物品
 - **跳过展示鱼环节**：跳过钓到鱼后的展示动画
 - **跳过钓鱼小游戏**：对于已多次捕获的鱼类自动完成钓鱼小游戏
@@ -88,27 +76,7 @@ FishingTweaks是一个星露谷物语钓鱼辅助模组，通过自动化重复�
 
 可以通过`config.json`文件或安装[Generic Mod Config Menu](https://www.nexusmods.com/stardewvalley/mods/5098)后在游戏内进行配置。
 
-#### 主要设置
-
-- **切换自动钓鱼按键**：用于开启/关闭自动钓鱼的按键（默认：V）
-- **启用自动抛竿**：自动投掷钓鱼竿
-- **启用自动补充鱼饵**：当鱼饵耗尽时自动补充
-- **启用自动补充钓具**：当钓具损坏时自动替换
-- **启用自动收集宝箱**：自动收集钓鱼宝箱中的物品
-- **跳过展示鱼环节**：跳过钓到鱼后的展示动画
-- **自动钓鱼最低体力要求**：当体力低于此值时，自动钓鱼功能将被禁用
-
-#### 钓鱼小游戏设置
-
-- **启用跳过钓鱼小游戏**：对于熟悉的鱼类启用跳过钓鱼小游戏
-- **最低捕获次数**：跳过钓鱼小游戏所需的捕获次数
-- **最低完美捕获次数**：跳过钓鱼小游戏所需的完美捕获次数
-
 ### 兼容性
 
 - 需要星露谷物语1.6+版本和SMAPI 4.0.0+
 - 兼容[Generic Mod Config Menu](https://www.nexusmods.com/stardewvalley/mods/5098)，可在游戏内进行配置
-
-### 制作人员
-
-- 开发者：TWT233
