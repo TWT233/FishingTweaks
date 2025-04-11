@@ -55,8 +55,16 @@ public class FishCounter
     public void Incr(string whichFish, bool isPerfect, int increment = 1)
     {
         var entry = Records.TryGetValue(whichFish, out var record) ? record : new Entry(whichFish, 0, 0);
+
         entry.CatchCount += increment;
-        if (isPerfect) entry.PerfectCount += increment;
+        if (entry.CatchCount < 0) entry.CatchCount = 0;
+
+        if (isPerfect)
+        {
+            entry.PerfectCount += increment;
+            if (entry.PerfectCount < 0) entry.PerfectCount = 0;
+        }
+
         Records[whichFish] = entry;
     }
 
