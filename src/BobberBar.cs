@@ -27,7 +27,7 @@ internal sealed partial class ModEntry
         if (!_config.SatisfiedSkipMinigame(bobberBar.whichFish))
         {
             _config.FishCounter.CurrentCount(bobberBar.whichFish, out var catchCount, out var perfectCount);
-            Game1.addHUDMessage(HUDMessage.ForCornerTextbox(
+            var msg = HUDMessage.ForCornerTextbox(
                 Helper.Translation.Get("bobber-bar.needed",
                     new
                     {
@@ -36,7 +36,9 @@ internal sealed partial class ModEntry
                         perfectNeeded = Math.Max(_config.MinPerfectCountForSkipFishing - perfectCount, 0)
                     }
                 )
-            ));
+            );
+            msg.timeLeft = 10000f;
+            Game1.addHUDMessage(msg);
             return;
         }
 
