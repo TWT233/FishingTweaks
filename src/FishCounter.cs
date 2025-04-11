@@ -82,7 +82,7 @@ public class FishCounter
     /// <returns>True if both catch requirements are met, false otherwise.</returns>
     public bool Satisfied(string whichFish, int catchRequired, int perfectRequired)
     {
-        if (!Records.TryGetValue(whichFish, out var entry)) return false;
+        var entry = Records.TryGetValue(whichFish, out var record) ? record : new Entry(whichFish, 0, 0);
 
         return entry.CatchCount >= catchRequired && entry.PerfectCount >= perfectRequired;
     }
