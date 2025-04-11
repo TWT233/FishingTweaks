@@ -58,7 +58,7 @@ public sealed class ModConfig
     ///     When enabled, the mod will automatically complete the fishing minigame
     ///     with a perfect catch, maximizing the quality of the caught fish.
     /// </summary>
-    public bool SkipMinigameWithPerfect { get; set; } = true;
+    public bool SkipMinigameWithPerfect { get; set; }
 
     /// <summary>
     ///     Whether to skip the fishing minigame when treasure appears.
