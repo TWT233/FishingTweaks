@@ -70,6 +70,7 @@ internal sealed partial class ModEntry
     /// <param name="fishingRod">The fishing rod that caught the fish.</param>
     private void SkipFishShowing(FishingRod fishingRod)
     {
+        if (_autoFishing is false) return;
         if (!_config.EnableSkipFishShowing) return;
         if (!fishingRod.fishCaught) return;
         if (Game1.player?.canMove == true) return;

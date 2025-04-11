@@ -20,11 +20,10 @@ internal sealed partial class ModEntry
     /// <param name="e">The event data.</param>
     private void SkipMinigameOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
-        // Check if the new menu is the fishing minigame
         if (e.NewMenu is not BobberBar bobberBar) return;
-
+        if (_autoFishing is false) return;
         if (!_config.EnableSkipMinigame) return;
-
+        
         if (!_config.SatisfiedSkipMinigame(bobberBar.whichFish))
         {
             _config.FishCounter.CurrentCount(bobberBar.whichFish, out var catchCount, out var perfectCount);
@@ -56,6 +55,7 @@ internal sealed partial class ModEntry
 
     private void RecordFishingOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
+        if (_autoFishing is false) return;
         if (e.OldMenu is not BobberBar bobberBar) return;
         if (!bobberBar.handledFishResult) return;
         if (bobberBar.distanceFromCatching < 0.5f) return; // missed

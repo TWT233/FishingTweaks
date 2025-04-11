@@ -15,6 +15,7 @@ internal sealed partial class ModEntry
     /// <param name="fishingRod">The fishing rod to apply tackle to.</param>
     private void AutoTackling(FishingRod fishingRod)
     {
+        if (_autoFishing is false) return;
         if (!_config.EnableAutoTackling) return;
         if (!fishingRod.CanUseTackle()) return;
 

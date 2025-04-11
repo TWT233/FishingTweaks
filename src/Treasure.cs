@@ -21,12 +21,9 @@ internal sealed partial class ModEntry
     /// <param name="e">The event data.</param>
     private void GrabTreasureOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
+        if (_autoFishing is false) return;
         if (!_config.EnableGrabTreasure) return;
-
-        // Check if the new menu is an item grab menu (treasure chest)
         if (e.NewMenu is not ItemGrabMenu itemGrabMenu) return;
-
-        // Ensure this is a fishing treasure menu by checking the context
         if (itemGrabMenu.context is not FishingRod) return;
 
         // Iterate through all items in the treasure chest
