@@ -53,6 +53,10 @@ public sealed class ModConfig
     /// </summary>
     public bool EnableSkipMinigame { get; set; } = true;
 
+    public bool SkipMinigameWithPerfect { get; set; } = true;
+
+    public bool SkipMinigameWithTreasure { get; set; } = true;
+
     /// <summary>
     ///     Whether to enable automatic casting of the fishing rod.
     ///     When enabled, the mod will automatically cast the fishing rod
@@ -181,6 +185,22 @@ internal sealed partial class ModEntry
             value => _config.EnableSkipMinigame = value,
             () => Helper.Translation.Get("config.enable-skip-minigame"),
             () => Helper.Translation.Get("config.enable-skip-minigame.tooltip")
+        );
+
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.SkipMinigameWithPerfect,
+            value => _config.SkipMinigameWithPerfect = value,
+            () => Helper.Translation.Get("config.skip-minigame-with-perfect"),
+            () => Helper.Translation.Get("config.skip-minigame-with-perfect.tooltip")
+        );
+
+        configMenu.AddBoolOption(
+            ModManifest,
+            () => _config.SkipMinigameWithTreasure,
+            value => _config.SkipMinigameWithTreasure = value,
+            () => Helper.Translation.Get("config.skip-minigame-with-treasure"),
+            () => Helper.Translation.Get("config.skip-minigame-with-treasure.tooltip")
         );
 
         configMenu.AddNumberOption(

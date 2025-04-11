@@ -114,7 +114,7 @@ public class FishCounter
         }
 
         /// <summary>
-        /// Gets or sets the ID of the fish.
+        ///     Gets or sets the ID of the fish.
         /// </summary>
         public string Id { get; set; }
 

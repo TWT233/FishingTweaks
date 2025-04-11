@@ -46,7 +46,10 @@ internal sealed partial class ModEntry
         bobberBar.distanceFromCatching = 2.0f;
 
         // Catch treasure
-        bobberBar.treasureCaught = bobberBar.treasure;
+        bobberBar.treasureCaught = bobberBar.treasure && _config.SkipMinigameWithTreasure;
+
+        // Perfect on demand, since it is perfect with default so do not need to check like treasure
+        bobberBar.perfect = _config.SkipMinigameWithPerfect;
 
         msg.message = Helper.Translation.Get("bobber-bar.familiar");
         Game1.addHUDMessage(msg);

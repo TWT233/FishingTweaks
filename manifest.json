@@ -6,5 +6,7 @@
   "UniqueID": "TWT233.FishingTweaks",
   "EntryDll": "FishingTweaks.dll",
   "MinimumApiVersion": "4.0.0",
-  "UpdateKeys": ["Nexus:33094"]
+  "UpdateKeys": [
+    "Nexus:33094"
+  ]
 }
