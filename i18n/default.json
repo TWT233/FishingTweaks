@@ -16,7 +16,7 @@
   "config.min-perfect-count-for-skip-minigame": "Min Perfects for Skip Minigame",
   "config.min-perfect-count-for-skip-minigame.tooltip": "When a fish's perfect catch count reaches this value, the fishing minigame will be automatically skipped.",
   "config.skip-minigame-with-perfect": "Skip Minigame with Perfect Catch",
-  "config.skip-minigame-with-perfect.tooltip": "When enabled, automatically completes the fishing minigame with a perfect catch, maximizing the quality of the caught fish.",
+  "config.skip-minigame-with-perfect.tooltip": "When enabled, automatically completes the fishing minigame with a perfect catch.",
   "config.skip-minigame-with-treasure": "Skip Minigame with Treasure",
   "config.skip-minigame-with-treasure.tooltip": "When enabled, automatically completes the fishing minigame and collects the treasure when it appears.",
   "config.enable-auto-casting": "Enable Auto-Casting",
