@@ -48,8 +48,8 @@ public sealed class ModConfig
 
     /// <summary>
     ///     Whether to enable auto-hooking.
-    ///     When enabled, the mod will automatically apply the Auto-Hook enchantment to the fishing rod,
-    ///     which automatically hooks fish when they bite without requiring player input.
+    ///     When enabled, the mod will automatically detects fish nibbling event
+    ///     and triggers hooking without applying the Auto-Hook enchantment.
     /// </summary>
     public bool EnableAutoHook { get; set; } = true;
 

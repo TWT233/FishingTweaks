@@ -1,7 +1,7 @@
+﻿using Microsoft.Xna.Framework;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
-using StardewValley.Enchantments;
 using StardewValley.Tools;
 
 namespace FishingTweaks;
@@ -18,6 +18,11 @@ internal sealed partial class ModEntry
     ///     This state can be toggled using the configured key (default: V).
     /// </summary>
     private bool _autoFishing;
+
+    /// <summary>
+    ///     The original bite time of the fishing rod.
+    /// </summary>
+    private float originalTimeUntilFishingBite = -1f;
 
     /// <summary>
     ///     Handles button press events to toggle auto-fishing.
@@ -64,18 +69,62 @@ internal sealed partial class ModEntry
     }
 
     /// <summary>
-    ///     Automatically applies the auto-hook enchantment to the fishing rod.
-    ///     This method adds the AutoHookEnchantment to the fishing rod if it doesn't already have one,
-    ///     which allows fish to be automatically hooked when they bite, without requiring player input.
-    ///     The method only runs when auto-fishing is enabled and the EnableAutoHook configuration option is set to true.
+    ///     Handles auto-hook functionality for the fishing rod.
     /// </summary>
-    /// <param name="fishingRod">The fishing rod to apply the auto-hook enchantment to.</param>
+    /// <param name="fishingRod">The fishing rod to handle auto-hook.</param>
     private void ApplyAutoHook(FishingRod fishingRod)
     {
         if (!_config.EnableAutoHook) return;
-        // Apply auto hook enchantment for auto pull
-        if (!fishingRod.hasEnchantmentOfType<AutoHookEnchantment>())
-            fishingRod.enchantments.Add(new AutoHookEnchantment());
+        if (!fishingRod.isFishing) return;
+
+        // reset the nibble accumulator
+        // to prevent fish stop nibbling
+        // until hooking is done
+        if (fishingRod.isNibbling)
+        {
+            fishingRod.fishingNibbleAccumulator = 0;
+        }
+
+        if (!Equals(fishingRod.timeUntilFishingBite, -1f))
+        {
+            // make the in-game bite time 5 secs longer
+            // to prevent race condition with the mod
+            if (Equals(originalTimeUntilFishingBite, -1f))
+            {
+                originalTimeUntilFishingBite = fishingRod.timeUntilFishingBite;
+                fishingRod.timeUntilFishingBite += 5 * 1000f;
+            }
+
+            // the mod however will use the original bite time
+            // so we need to reset it when the bite is over
+            if (fishingRod.fishingBiteAccumulator > originalTimeUntilFishingBite)
+            {
+                originalTimeUntilFishingBite = -1f;
+
+                fishingRod.fishingBiteAccumulator = 0f;
+                fishingRod.timeUntilFishingBite = -1f;
+                fishingRod.isNibbling = true;
+
+                // also, let's keep the nibble effect
+                Game1.player.PlayFishBiteChime();
+                Rumble.rumble(0.75f, 250f);
+                fishingRod.timeUntilFishingNibbleDone = FishingRod.maxTimeToNibble;
+                Point standingPixel3 = Game1.player.StandingPixel;
+                Game1.screenOverlayTempSprites.Add(new TemporaryAnimatedSprite("LooseSprites\\Cursors", new Rectangle(395, 497, 3, 8), new Vector2(standingPixel3.X - Game1.viewport.X, standingPixel3.Y - 128 - 8 - Game1.viewport.Y), flipped: false, 0.02f, Color.White)
+                {
+                    scale = 5f,
+                    scaleChange = -0.01f,
+                    motion = new Vector2(0f, -0.5f),
+                    shakeIntensityChange = -0.005f,
+                    shakeIntensity = 1f
+                });
+
+                // now, ftw
+                fishingRod.timePerBobberBob = 1f;
+                fishingRod.timeUntilFishingNibbleDone = FishingRod.maxTimeToNibble;
+                fishingRod.DoFunction(Game1.player.currentLocation, (int)fishingRod.bobber.X, (int)fishingRod.bobber.Y, 1, Game1.player);
+            }
+        }
     }
 
     /// <summary>
