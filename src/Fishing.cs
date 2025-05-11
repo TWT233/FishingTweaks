@@ -1,4 +1,4 @@
-﻿using StardewModdingAPI;
+using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
 using StardewValley.Enchantments;
@@ -51,7 +51,7 @@ internal sealed partial class ModEntry
     /// <param name="e">The event data.</param>
     private void AutoFishingOnUpdateTicked(object? sender, UpdateTickedEventArgs e)
     {
-        if (_autoFishing is false) return;
+        if (!_autoFishing) return;
         if (!Context.IsWorldReady) return;
         if (Game1.player?.CurrentTool is not FishingRod fishingRod) return;
 
@@ -87,7 +87,7 @@ internal sealed partial class ModEntry
     /// <param name="fishingRod">The fishing rod that caught the fish.</param>
     private void SkipFishShowing(FishingRod fishingRod)
     {
-        if (_autoFishing is false) return;
+        if (!_autoFishing) return;
         if (!_config.EnableSkipFishShowing) return;
         if (!fishingRod.fishCaught) return;
         if (Game1.player?.canMove == true) return;

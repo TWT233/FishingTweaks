@@ -16,11 +16,11 @@ internal sealed partial class ModEntry
     /// <param name="fishingRod">The fishing rod to cast.</param>
     private void AutoCasting(FishingRod fishingRod)
     {
-        if (_autoFishing is false) return;
+        if (!_autoFishing) return;
         if (!_config.EnableAutoCasting) return;
         if (fishingRod.inUse()) return;
         if (Game1.player is null) return;
-        if (Game1.player.canMove == false) return;
+        if (!Game1.player.canMove) return;
         if (Game1.activeClickableMenu is not null) return;
 
         // Check player's stamina against the configured minimum

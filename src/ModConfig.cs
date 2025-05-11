@@ -10,7 +10,7 @@ namespace FishingTweaks;
 /// </summary>
 public sealed class ModConfig
 {
-    public FishCounter FishCounter = new();
+    public readonly FishCounter FishCounter = new();
 
     /// <summary>
     ///     The key to toggle auto-fishing functionality.

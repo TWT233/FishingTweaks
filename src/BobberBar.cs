@@ -21,7 +21,7 @@ internal sealed partial class ModEntry
     private void SkipMinigameOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
         if (e.NewMenu is not BobberBar bobberBar) return;
-        if (_autoFishing is false) return;
+        if (!_autoFishing) return;
         if (!_config.EnableSkipMinigame) return;
 
         var msg = HUDMessage.ForItemGained(ItemRegistry.Create(bobberBar.whichFish), 1, "minigame");
@@ -58,7 +58,7 @@ internal sealed partial class ModEntry
 
     private void RecordFishingOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
-        if (_autoFishing is false) return;
+        if (!_autoFishing) return;
         if (e.OldMenu is not BobberBar bobberBar) return;
         if (!bobberBar.handledFishResult) return;
         if (bobberBar.distanceFromCatching < 0.5f) return; // missed
