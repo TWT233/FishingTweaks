@@ -6,7 +6,7 @@
   "config.enable-auto-tackling": "Enable Auto-Tackling",
   "config.enable-auto-tackling.tooltip": "When enabled, automatically applies tackle from inventory when the fishing rod's tackle is broken.",
   "config.enable-auto-hook": "Enable Auto-Hooking",
-  "config.enable-auto-hook.tooltip": "When enabled, automatically apply the Auto-Hook enchantment to the fishing rod.",
+  "config.enable-auto-hook.tooltip": "When enabled, automatically hooks fish when they nibble.",
   "config.enable-grab-treasure": "Enable Auto-Grab Treasure",
   "config.enable-grab-treasure.tooltip": "When enabled, automatically collects items from fishing treasure chests.",
   "config.enable-skip-fish-showing": "Skip Fish Showing",

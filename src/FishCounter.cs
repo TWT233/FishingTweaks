@@ -11,7 +11,7 @@ public class FishCounter
     /// <summary>
     ///     Dictionary storing catch records for each fish type, indexed by fish ID.
     /// </summary>
-    public SortedDictionary<string, Entry> Records = new();
+    private readonly SortedDictionary<string, Entry> Records = new();
 
     /// <summary>
     ///     Configures and displays fish catch statistics in the Generic Mod Config Menu.
