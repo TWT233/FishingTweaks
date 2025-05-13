@@ -48,40 +48,32 @@ internal sealed partial class ModEntry
         // Catch treasure
         bobberBar.treasureCaught = bobberBar.treasure && _config.SkipMinigameWithTreasure;
 
-        if (_config.SkipMinigameWithPerfect)
-            // Perfect on demand, since it is perfect with default so do not need to check like treasure
-            bobberBar.perfect = true;
-        else
-        {
-            int baseChance; // in percentage
-            switch (bobberBar.motionType)
-            {
-                // Dart
-                case 1:
-                    baseChance = 5;
-                    break;
-                // Smooth
-                case 2:
-                    baseChance = 90;
-                    break;
-                // Floater & Sinker
-                case 3:
-                case 4:
-                    baseChance = 22;
-                    break;
-                // Mixed
-                default:
-                    baseChance = 54;
-                    break;
-            }
-            baseChance = bobberBar.bossFish ? (int)Math.Ceiling(baseChance / 5f) : baseChance;
-            double difficultyMultiplier = (-3.72f + (123f / (1 + Math.Pow(bobberBar.difficulty / 44.29f, 2.11f)))) / 100;
-
-            bobberBar.perfect = new Random().Next(0, 100) <= (baseChance * difficultyMultiplier);
-        }
+        // Designed perfect calculation
+        bobberBar.perfect = CalculateIsPerfect(bobberBar);
 
         msg.message = Helper.Translation.Get("bobber-bar.familiar");
         Game1.addHUDMessage(msg);
+    }
+
+    private bool CalculateIsPerfect(BobberBar bobberBar)
+    {
+        // Perfect on demand, since it is perfect with default so do not need to check like treasure
+        if (_config.SkipMinigameWithPerfect) return true;
+
+        // TODO: config for enable chanced perfect, base chance for each type 
+        var baseChance = bobberBar.motionType switch
+        {
+            // Dart
+            1 => 5,
+            // Smooth
+            2 => 90,
+            // Floater & Sinker
+            3 or 4 => 22,
+            _ => 54
+        };
+        baseChance = bobberBar.bossFish ? (int)Math.Ceiling(baseChance / 5f) : baseChance;
+        var difficultyMultiplier = (-3.72f + 123f / (1 + Math.Pow(bobberBar.difficulty / 44.29f, 2.11f))) / 100;
+        return new Random().Next(0, 100) <= baseChance * difficultyMultiplier;
     }
 
 
