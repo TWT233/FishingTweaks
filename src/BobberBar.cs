@@ -63,12 +63,9 @@ internal sealed partial class ModEntry
         // TODO: config for enable chanced perfect, base chance for each type 
         var baseChance = bobberBar.motionType switch
         {
-            // Dart
-            1 => 5,
-            // Smooth
-            2 => 90,
-            // Floater & Sinker
-            3 or 4 => 22,
+            1 => 5, // Dart
+            2 => 90, // Smooth
+            3 or 4 => 22, // Floater & Sinker
             _ => 54
         };
         baseChance = bobberBar.bossFish ? (int)Math.Ceiling(baseChance / 5f) : baseChance;

@@ -18,7 +18,7 @@
   "config.min-perfect-count-for-skip-minigame": "跳过钓鱼小游戏所需完美捕获次数",
   "config.min-perfect-count-for-skip-minigame.tooltip": "当某种鱼的完美捕获次数达到此值时，将自动跳过钓鱼小游戏",
   "config.skip-minigame-with-perfect": "跳过小游戏时完美捕获",
-  "config.skip-minigame-with-perfect.tooltip": "启用后，自动完成钓鱼小游戏并获得完美捕获",
+  "config.skip-minigame-with-perfect.tooltip": "启用后，自动完成钓鱼小游戏时必定为完美捕获（关闭时随机获得完美捕获，与鱼的难度相关）",
   "config.skip-minigame-with-treasure": "跳过小游戏时获得出现的宝箱",
   "config.skip-minigame-with-treasure.tooltip": "启用后，当出现宝箱时自动完成钓鱼小游戏并收集宝箱",
   "config.enable-auto-casting": "启用自动抛竿",

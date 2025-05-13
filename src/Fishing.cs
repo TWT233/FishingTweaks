@@ -22,7 +22,7 @@ internal sealed partial class ModEntry
     /// <summary>
     ///     The original bite time of the fishing rod.
     /// </summary>
-    private float originalTimeUntilFishingBite = -1f;
+    private float _originalTimeUntilFishingBite = -1f;
 
     /// <summary>
     ///     Handles button press events to toggle auto-fishing.
@@ -89,17 +89,17 @@ internal sealed partial class ModEntry
         {
             // make the in-game bite time 5 secs longer
             // to prevent race condition with the mod
-            if (Equals(originalTimeUntilFishingBite, -1f))
+            if (Equals(_originalTimeUntilFishingBite, -1f))
             {
-                originalTimeUntilFishingBite = fishingRod.timeUntilFishingBite;
+                _originalTimeUntilFishingBite = fishingRod.timeUntilFishingBite;
                 fishingRod.timeUntilFishingBite += 5 * 1000f;
             }
 
             // the mod however will use the original bite time
             // so we need to reset it when the bite is over
-            if (fishingRod.fishingBiteAccumulator > originalTimeUntilFishingBite)
+            if (fishingRod.fishingBiteAccumulator > _originalTimeUntilFishingBite)
             {
-                originalTimeUntilFishingBite = -1f;
+                _originalTimeUntilFishingBite = -1f;
 
                 fishingRod.fishingBiteAccumulator = 0f;
                 fishingRod.timeUntilFishingBite = -1f;
