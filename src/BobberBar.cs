@@ -80,6 +80,7 @@ internal sealed partial class ModEntry
         if (e.OldMenu is not BobberBar bobberBar) return;
         if (!bobberBar.handledFishResult) return;
         if (bobberBar.distanceFromCatching < 0.5f) return; // missed
+        // TODO: record miss too
 
         IncrFishCounter(bobberBar.whichFish, bobberBar.perfect);
 
