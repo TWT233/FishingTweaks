@@ -20,11 +20,6 @@ internal sealed partial class ModEntry
     private bool _autoFishing;
 
     /// <summary>
-    ///     The original bite time of the fishing rod.
-    /// </summary>
-    private float _originalTimeUntilFishingBite = -1f;
-
-    /// <summary>
     ///     Handles button press events to toggle auto-fishing.
     ///     When the configured toggle key is pressed, this method switches
     ///     the auto-fishing state and displays a notification to the player.
@@ -75,9 +70,10 @@ internal sealed partial class ModEntry
         if (!fishingRod.isFishing) return;
         if (!fishingRod.isNibbling) return;
         if (fishingRod.hit) return;
-        
-        fishingRod.DoFunction(Game1.player.currentLocation, (int)fishingRod.bobber.X, (int)fishingRod.bobber.Y, 1, Game1.player);
 
+        fishingRod.DoFunction(Game1.player.currentLocation, (int)fishingRod.bobber.X, (int)fishingRod.bobber.Y, 1,
+            Game1.player);
+        fishingRod.isNibbling = false;
     }
 
     /// <summary>
