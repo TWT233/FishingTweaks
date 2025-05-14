@@ -74,7 +74,7 @@ internal sealed partial class ModEntry
     }
 
 
-    private void RecordFishingOnMenuChanged(object? sender, MenuChangedEventArgs e)
+    private void RecordPerfectOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
         if (!_autoFishing) return;
         if (e.OldMenu is not BobberBar bobberBar) return;
@@ -82,5 +82,33 @@ internal sealed partial class ModEntry
         if (bobberBar.distanceFromCatching < 0.5f) return; // missed
 
         IncrFishCounter(bobberBar.whichFish, bobberBar.perfect);
+
+        if (!bobberBar.perfect) return;
+
+        var fishId = bobberBar.whichFish;
+        var perfectKey = $"PERFECT_{fishId}_MOD";
+
+        
+        int[] perfectCounts;
+        if (Game1.player.fishCaught.TryGetValue(perfectKey, out var existingDataArray) && existingDataArray.Length == 2)
+        {
+            perfectCounts = existingDataArray;
+        }
+        else
+        {
+            // Initialize or re-initialize if data is missing or not in the expected format [manual, mod_assisted]
+            perfectCounts = new[] { 0, 0 };
+        }
+
+        var isModAssisted = _config.EnableAutoHook || _config.EnableSkipMinigame;
+        if (isModAssisted)
+        {
+            perfectCounts[1]++; // Increment MOD-assisted perfect count
+        }
+        else
+        {
+            perfectCounts[0]++; // Increment manual perfect count
+        }
+        Game1.player.fishCaught[perfectKey] = perfectCounts;
     }
 }
