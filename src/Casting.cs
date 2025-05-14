@@ -29,7 +29,11 @@ internal sealed partial class ModEntry
             HandleLowStamina();
             return;
         }
-
+        
+        // To reduce performance impact, bait and tackle is only checked right before casting
+        AutoBaiting(fishingRod);
+        AutoTackling(fishingRod);
+        
         // Cast the fishing rod at the player's current position
         fishingRod.beginUsing(Game1.currentLocation, 0, 0, Game1.player);
         fishingRod.castingPower = 1.0f;

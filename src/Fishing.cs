@@ -60,11 +60,8 @@ internal sealed partial class ModEntry
         if (!Context.IsWorldReady) return;
         if (Game1.player?.CurrentTool is not FishingRod fishingRod) return;
 
-        AutoBaiting(fishingRod);
-        AutoTackling(fishingRod);
         AutoCasting(fishingRod);
-
-        ApplyAutoHook(fishingRod);
+        AutoHook(fishingRod);
         SkipFishShowing(fishingRod);
     }
 
@@ -72,59 +69,15 @@ internal sealed partial class ModEntry
     ///     Handles auto-hook functionality for the fishing rod.
     /// </summary>
     /// <param name="fishingRod">The fishing rod to handle auto-hook.</param>
-    private void ApplyAutoHook(FishingRod fishingRod)
+    private void AutoHook(FishingRod fishingRod)
     {
         if (!_config.EnableAutoHook) return;
         if (!fishingRod.isFishing) return;
+        if (!fishingRod.isNibbling) return;
+        if (fishingRod.hit) return;
+        
+        fishingRod.DoFunction(Game1.player.currentLocation, (int)fishingRod.bobber.X, (int)fishingRod.bobber.Y, 1, Game1.player);
 
-        // reset the nibble accumulator
-        // to prevent fish stop nibbling
-        // until hooking is done
-        if (fishingRod.isNibbling)
-        {
-            fishingRod.fishingNibbleAccumulator = 0;
-        }
-
-        if (!Equals(fishingRod.timeUntilFishingBite, -1f))
-        {
-            // make the in-game bite time 5 secs longer
-            // to prevent race condition with the mod
-            if (Equals(_originalTimeUntilFishingBite, -1f))
-            {
-                _originalTimeUntilFishingBite = fishingRod.timeUntilFishingBite;
-                fishingRod.timeUntilFishingBite += 5 * 1000f;
-            }
-
-            // the mod however will use the original bite time
-            // so we need to reset it when the bite is over
-            if (fishingRod.fishingBiteAccumulator > _originalTimeUntilFishingBite)
-            {
-                _originalTimeUntilFishingBite = -1f;
-
-                fishingRod.fishingBiteAccumulator = 0f;
-                fishingRod.timeUntilFishingBite = -1f;
-                fishingRod.isNibbling = true;
-
-                // also, let's keep the nibble effect
-                Game1.player.PlayFishBiteChime();
-                Rumble.rumble(0.75f, 250f);
-                fishingRod.timeUntilFishingNibbleDone = FishingRod.maxTimeToNibble;
-                Point standingPixel3 = Game1.player.StandingPixel;
-                Game1.screenOverlayTempSprites.Add(new TemporaryAnimatedSprite("LooseSprites\\Cursors", new Rectangle(395, 497, 3, 8), new Vector2(standingPixel3.X - Game1.viewport.X, standingPixel3.Y - 128 - 8 - Game1.viewport.Y), flipped: false, 0.02f, Color.White)
-                {
-                    scale = 5f,
-                    scaleChange = -0.01f,
-                    motion = new Vector2(0f, -0.5f),
-                    shakeIntensityChange = -0.005f,
-                    shakeIntensity = 1f
-                });
-
-                // now, ftw
-                fishingRod.timePerBobberBob = 1f;
-                fishingRod.timeUntilFishingNibbleDone = FishingRod.maxTimeToNibble;
-                fishingRod.DoFunction(Game1.player.currentLocation, (int)fishingRod.bobber.X, (int)fishingRod.bobber.Y, 1, Game1.player);
-            }
-        }
     }
 
     /// <summary>
