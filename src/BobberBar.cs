@@ -83,32 +83,35 @@ internal sealed partial class ModEntry
 
         IncrFishCounter(bobberBar.whichFish, bobberBar.perfect);
 
-        if (!bobberBar.perfect) return;
-
         var fishId = bobberBar.whichFish;
-        var perfectKey = $"PERFECT_{fishId}_MOD";
+        var catchStatsKey = $"CATCH_STATS_{fishId}_MOD"; // New unified key
 
-        
-        int[] perfectCounts;
-        if (Game1.player.fishCaught.TryGetValue(perfectKey, out var existingDataArray) && existingDataArray.Length == 2)
+        int[] catchStats;
+        if (Game1.player.fishCaught.TryGetValue(catchStatsKey, out var existingDataArray) && existingDataArray.Length == 4)
         {
-            perfectCounts = existingDataArray;
+            catchStats = existingDataArray;
         }
         else
         {
-            // Initialize or re-initialize if data is missing or not in the expected format [manual, mod_assisted]
-            perfectCounts = new[] { 0, 0 };
+            // Initialize or re-initialize if data is missing or not in the expected format
+            // [manual_normal, mod_normal, manual_perfect, mod_perfect]
+            catchStats = new[] { 0, 0, 0, 0 };
         }
 
         var isModAssisted = _config.EnableAutoHook || _config.EnableSkipMinigame;
-        if (isModAssisted)
+        var isPerfect = bobberBar.perfect;
+
+        int indexToIncrement;
+        if (isPerfect)
         {
-            perfectCounts[1]++; // Increment MOD-assisted perfect count
+            indexToIncrement = isModAssisted ? 3 : 2; // 3: MOD-assisted perfect, 2: Manual perfect
         }
-        else
+        else // Not perfect (normal catch)
         {
-            perfectCounts[0]++; // Increment manual perfect count
+            indexToIncrement = isModAssisted ? 1 : 0; // 1: MOD-assisted normal, 0: Manual normal
         }
-        Game1.player.fishCaught[perfectKey] = perfectCounts;
+
+        catchStats[indexToIncrement]++;
+        Game1.player.fishCaught[catchStatsKey] = catchStats;
     }
 }
