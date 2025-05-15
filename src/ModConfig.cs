@@ -10,8 +10,6 @@ namespace FishingTweaks;
 /// </summary>
 public sealed class ModConfig
 {
-    public readonly FishCounter FishCounter = new();
-
     /// <summary>
     ///     The key to toggle auto-fishing functionality.
     ///     When pressed, this key will enable or disable the automatic fishing feature.
@@ -101,12 +99,6 @@ public sealed class ModConfig
     ///     Perfect catches indicate mastery of catching that fish type.
     /// </summary>
     public int MinPerfectCountForSkipFishing { get; set; } = 1;
-
-
-    public bool SatisfiedSkipMinigame(string whichFish)
-    {
-        return FishCounter.Satisfied(whichFish, MinCatchCountForSkipFishing, MinPerfectCountForSkipFishing);
-    }
 }
 
 /// <summary>
@@ -251,17 +243,5 @@ internal sealed partial class ModEntry
             () => Helper.Translation.Get("config.enable-grab-treasure"),
             () => Helper.Translation.Get("config.enable-grab-treasure.tooltip")
         );
-
-        _config.FishCounter.ArrangeMenu(ModManifest, Helper, configMenu);
-    }
-
-    private void IncrFishCounter(string whichFish, bool isPerfect, int increment = 1)
-    {
-        _config.FishCounter.Incr(whichFish, isPerfect, increment);
-        Helper.WriteConfig(_config);
-
-        Helper.ModRegistry.GetApi<IGenericModConfigMenuApi>("spacechase0.GenericModConfigMenu")
-            ?.Unregister(ModManifest);
-        SetupGMCMOnGameLaunched(null, null);
     }
 }

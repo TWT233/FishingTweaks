@@ -17,6 +17,9 @@ internal sealed partial class ModEntry : Mod
      *********/
     /// <summary>The mod configuration from the player.</summary>
     private ModConfig _config = null!;
+    
+    /// <summary>Tracks player fishing statistics.</summary>
+    private FishCounter _counter = new();
 
 
     /// <summary>

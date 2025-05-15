@@ -26,16 +26,16 @@ internal sealed partial class ModEntry
 
         var msg = HUDMessage.ForItemGained(ItemRegistry.Create(bobberBar.whichFish), 1, "minigame");
 
-        if (!_config.SatisfiedSkipMinigame(bobberBar.whichFish))
+        var caught = _counter.Get(bobberBar.whichFish, FishCounter.CatchType.ManualNormal);
+        var perfectCaught = _counter.Get(bobberBar.whichFish, FishCounter.CatchType.ManualPerfect);
+        if (caught < _config.MinCatchCountForSkipFishing || perfectCaught < _config.MinPerfectCountForSkipFishing)
         {
-            _config.FishCounter.CurrentCount(bobberBar.whichFish, out var catchCount, out var perfectCount);
-
             msg.message = Helper.Translation.Get("bobber-bar.needed",
                 new
                 {
                     fishName = ItemRegistry.Create(bobberBar.whichFish).DisplayName,
-                    catchNeeded = Math.Max(_config.MinCatchCountForSkipFishing - catchCount, 0),
-                    perfectNeeded = Math.Max(_config.MinPerfectCountForSkipFishing - perfectCount, 0)
+                    catchNeeded = Math.Max(_config.MinCatchCountForSkipFishing - caught, 0),
+                    perfectNeeded = Math.Max(_config.MinPerfectCountForSkipFishing - perfectCaught, 0)
                 }
             );
             Game1.addHUDMessage(msg);
@@ -76,43 +76,27 @@ internal sealed partial class ModEntry
 
     private void RecordPerfectOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
-        if (!_autoFishing) return;
         if (e.OldMenu is not BobberBar bobberBar) return;
         if (!bobberBar.handledFishResult) return;
-        if (bobberBar.distanceFromCatching < 0.5f) return; // missed
-        // TODO: record miss too
 
-        IncrFishCounter(bobberBar.whichFish, bobberBar.perfect);
-
-        var fishId = bobberBar.whichFish;
-        var catchStatsKey = $"CATCH_STATS_{fishId}_MOD"; // New unified key
-
-        int[] catchStats;
-        if (Game1.player.fishCaught.TryGetValue(catchStatsKey, out var existingDataArray) && existingDataArray.Length == 4)
+        if (bobberBar.distanceFromCatching < 0.5f)
         {
-            catchStats = existingDataArray;
-        }
-        else
-        {
-            // Initialize or re-initialize if data is missing or not in the expected format
-            // [manual_normal, mod_normal, manual_perfect, mod_perfect]
-            catchStats = new[] { 0, 0, 0, 0 };
+            _counter.Incr(bobberBar.whichFish, FishCounter.CatchType.Missed);
+            return;
         }
 
-        var isModAssisted = _config.EnableAutoHook || _config.EnableSkipMinigame;
-        var isPerfect = bobberBar.perfect;
-
-        int indexToIncrement;
-        if (isPerfect)
+        if (bobberBar.perfect)
         {
-            indexToIncrement = isModAssisted ? 3 : 2; // 3: MOD-assisted perfect, 2: Manual perfect
-        }
-        else // Not perfect (normal catch)
-        {
-            indexToIncrement = isModAssisted ? 1 : 0; // 1: MOD-assisted normal, 0: Manual normal
+            _counter.Incr(bobberBar.whichFish,
+                _autoFishing && _config.EnableSkipMinigame
+                    ? FishCounter.CatchType.ModAssistedPerfect
+                    : FishCounter.CatchType.ManualPerfect);
+            return;
         }
 
-        catchStats[indexToIncrement]++;
-        Game1.player.fishCaught[catchStatsKey] = catchStats;
+        _counter.Incr(bobberBar.whichFish,
+            _autoFishing && _config.EnableSkipMinigame
+                ? FishCounter.CatchType.ModAssistedNormal
+                : FishCounter.CatchType.ManualNormal);
     }
 }
