@@ -74,7 +74,7 @@ internal sealed partial class ModEntry
     }
 
 
-    private void RecordPerfectOnMenuChanged(object? sender, MenuChangedEventArgs e)
+    private void RecordOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
         if (e.OldMenu is not BobberBar bobberBar) return;
         if (!bobberBar.handledFishResult) return;

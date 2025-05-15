@@ -37,7 +37,7 @@ internal sealed partial class ModEntry : Mod
 
         // Register event handlers for different features
         helper.Events.Display.MenuChanged += SkipMinigameOnMenuChanged; // Handles fishing minigame skipping
-        helper.Events.Display.MenuChanged += RecordPerfectOnMenuChanged;
+        helper.Events.Display.MenuChanged += RecordOnMenuChanged;
         helper.Events.Display.MenuChanged += GrabTreasureOnMenuChanged; // Handles treasure collection
         helper.Events.Input.ButtonPressed += ToggleAutoFishingOnButtonPressed; // Handles auto-casting toggle
         helper.Events.GameLoop.UpdateTicked += AutoFishingOnUpdateTicked; // Handles auto-fishing
