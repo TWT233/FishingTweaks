@@ -79,24 +79,20 @@ internal sealed partial class ModEntry
         if (e.OldMenu is not BobberBar bobberBar) return;
         if (!bobberBar.handledFishResult) return;
 
+        // can be bypassed by disable auto fishing while pulling fish out of water
+        // but oh that is the choice of the player itself,
+        // and it is not so easy to handle that technically
+        // maybe introduce a state to record assisted in skip minigame
+        var assisted = _autoFishing && _config.EnableSkipMinigame; 
+
+        FishCounter.CatchType type;
         if (bobberBar.distanceFromCatching < 0.5f)
-        {
-            _counter.Incr(bobberBar.whichFish, FishCounter.CatchType.Missed);
-            return;
-        }
+            type = FishCounter.CatchType.Missed;
+        else if (bobberBar.perfect)
+            type = assisted ? FishCounter.CatchType.ModAssistedPerfect : FishCounter.CatchType.ManualPerfect;
+        else
+            type = assisted ? FishCounter.CatchType.ModAssistedNormal : FishCounter.CatchType.ManualNormal;
 
-        if (bobberBar.perfect)
-        {
-            _counter.Incr(bobberBar.whichFish,
-                _autoFishing && _config.EnableSkipMinigame
-                    ? FishCounter.CatchType.ModAssistedPerfect
-                    : FishCounter.CatchType.ManualPerfect);
-            return;
-        }
-
-        _counter.Incr(bobberBar.whichFish,
-            _autoFishing && _config.EnableSkipMinigame
-                ? FishCounter.CatchType.ModAssistedNormal
-                : FishCounter.CatchType.ManualNormal);
+        _counter.Incr(bobberBar.whichFish, type);
     }
 }

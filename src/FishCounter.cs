@@ -33,13 +33,12 @@ public class FishCounter
     public int Get(string whichFish, CatchType type)
     {
         if (!Game1.player.fishCaught.TryGetValue(Key(whichFish), out var existing)) return 0;
-        if ((int)type < 0 || (int)type >= existing.Length) return 0; // compatibility
+        if ((int)type < 0 || (int)type >= existing.Length) return 0; // for compatibility, i wanna a one-liner indeed
         return existing[(int)type];
     }
 
     private string Key(string whichFish)
     {
         return $"FT_{whichFish}_FT";
-        // New unified key
     }
 }
