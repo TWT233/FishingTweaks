@@ -19,7 +19,7 @@ internal sealed partial class ModEntry : Mod
     private ModConfig _config = null!;
     
     /// <summary>Tracks player fishing statistics.</summary>
-    private FishCounter _counter = new();
+    private Counter _counter = new();
 
 
     /// <summary>

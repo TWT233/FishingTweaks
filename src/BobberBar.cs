@@ -26,8 +26,8 @@ internal sealed partial class ModEntry
 
         var msg = HUDMessage.ForItemGained(ItemRegistry.Create(bobberBar.whichFish), 1, "minigame");
 
-        var caught = _counter.Get(bobberBar.whichFish, FishCounter.CatchType.ManualNormal);
-        var perfectCaught = _counter.Get(bobberBar.whichFish, FishCounter.CatchType.ManualPerfect);
+        var caught = Counter.Get(bobberBar.whichFish, Counter.CatchType.ManualNormal);
+        var perfectCaught = Counter.Get(bobberBar.whichFish, Counter.CatchType.ManualPerfect);
         if (caught < _config.MinCatchCountForSkipFishing || perfectCaught < _config.MinPerfectCountForSkipFishing)
         {
             msg.message = Helper.Translation.Get("bobber-bar.needed",
@@ -55,12 +55,18 @@ internal sealed partial class ModEntry
         Game1.addHUDMessage(msg);
     }
 
+    /// <summary>
+    /// Calculates whether the fishing attempt should be considered a perfect catch.
+    /// This takes into account configuration settings, fish movement type, and difficulty.
+    /// </summary>
+    /// <param name="bobberBar">The BobberBar instance containing fishing minigame data.</param>
+    /// <returns>True if the catch should be considered perfect, false otherwise.</returns>
     private bool CalculateIsPerfect(BobberBar bobberBar)
     {
-        // Perfect on demand, since it is perfect with default so do not need to check like treasure
+        // If perfect catches are forced in config, always return true
         if (_config.SkipMinigameWithPerfect) return true;
 
-        // TODO: config for enable chanced perfect, base chance for each type 
+        // Calculate base perfect chance based on fish movement type:
         var baseChance = bobberBar.motionType switch
         {
             1 => 5, // Dart
@@ -68,31 +74,47 @@ internal sealed partial class ModEntry
             3 or 4 => 22, // Floater & Sinker
             _ => 54
         };
+
+        // Reduce chance for boss fish (divide by 5)
         baseChance = bobberBar.bossFish ? (int)Math.Ceiling(baseChance / 5f) : baseChance;
+
+        // Calculate difficulty multiplier using sigmoid-like function:
         var difficultyMultiplier = (-3.72f + 123f / (1 + Math.Pow(bobberBar.difficulty / 44.29f, 2.11f))) / 100;
+
         return new Random().Next(0, 100) <= baseChance * difficultyMultiplier;
     }
 
 
+    /// <summary>
+    /// Records fishing results when the BobberBar menu closes.
+    /// This method tracks successful catches, perfect catches, and misses,
+    /// distinguishing between manual and mod-assisted catches based on configuration.
+    /// </summary>
+    /// <param name="sender">The event sender.</param>
+    /// <param name="e">The menu changed event data.</param>
     private void RecordOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
         if (e.OldMenu is not BobberBar bobberBar) return;
         if (!bobberBar.handledFishResult) return;
 
-        // can be bypassed by disable auto fishing while pulling fish out of water
-        // but oh that is the choice of the player itself,
-        // and it is not so easy to handle that technically
-        // maybe introduce a state to record assisted in skip minigame
-        var assisted = _autoFishing && _config.EnableSkipMinigame; 
+        // Check if this catch was assisted by the mod's auto-fishing features
+        // 
+        // Can be bypassed by disable auto fishing in sprite right after minigame finished
+        // But oh that is the choice of the player itself
+        // And it is not so easy to handle that technically
+        // Maybe introduce a state to record assisted in skip minigame
+        var assisted = _autoFishing && _config.EnableSkipMinigame;
 
-        FishCounter.CatchType type;
+        // Determine catch type based on fishing results and if mod-assisted
+        Counter.CatchType type;
         if (bobberBar.distanceFromCatching < 0.5f)
-            type = FishCounter.CatchType.Missed;
+            type = Counter.CatchType.Missed;
         else if (bobberBar.perfect)
-            type = assisted ? FishCounter.CatchType.ModAssistedPerfect : FishCounter.CatchType.ManualPerfect;
+            type = assisted ? Counter.CatchType.ModAssistedPerfect : Counter.CatchType.ManualPerfect;
         else
-            type = assisted ? FishCounter.CatchType.ModAssistedNormal : FishCounter.CatchType.ManualNormal;
+            type = assisted ? Counter.CatchType.ModAssistedNormal : Counter.CatchType.ManualNormal;
 
-        _counter.Incr(bobberBar.whichFish, type);
+        // Increment the fish counter with the appropriate catch type
+        Counter.Incr(bobberBar.whichFish, type);
     }
 }
