@@ -11,6 +11,8 @@ namespace FishingTweaks;
 /// </summary>
 internal sealed partial class ModEntry
 {
+    private bool _lastCaughtAssisted = false;
+
     /// <summary>
     ///     Handles the BobberBar menu appearance.
     ///     When the fishing minigame appears, it automatically sets the progress
@@ -23,6 +25,9 @@ internal sealed partial class ModEntry
         if (e.NewMenu is not BobberBar bobberBar) return;
         if (!_autoFishing) return;
         if (!_config.EnableSkipMinigame) return;
+
+        // Reset buffered state
+        _lastCaughtAssisted = false;
 
         var msg = HUDMessage.ForItemGained(ItemRegistry.Create(bobberBar.whichFish), 1, "minigame");
 
@@ -44,6 +49,7 @@ internal sealed partial class ModEntry
 
         // Set the progress bar to maximum (2.0 is the value that triggers a catch(>=1.0f))
         bobberBar.distanceFromCatching = 2.0f;
+        _lastCaughtAssisted = true;
 
         // Catch treasure
         bobberBar.treasureCaught = bobberBar.treasure && _config.SkipMinigameWithTreasure;
@@ -97,24 +103,19 @@ internal sealed partial class ModEntry
         if (e.OldMenu is not BobberBar bobberBar) return;
         if (!bobberBar.handledFishResult) return;
 
-        // Check if this catch was assisted by the mod's auto-fishing features
-        // 
-        // Can be bypassed by disable auto fishing in sprite right after minigame finished
-        // But oh that is the choice of the player itself
-        // And it is not so easy to handle that technically
-        // Maybe introduce a state to record assisted in skip minigame
-        var assisted = _autoFishing && _config.EnableSkipMinigame;
-
         // Determine catch type based on fishing results and if mod-assisted
         Counter.CatchType type;
         if (bobberBar.distanceFromCatching < 0.5f)
             type = Counter.CatchType.Missed;
         else if (bobberBar.perfect)
-            type = assisted ? Counter.CatchType.ModAssistedPerfect : Counter.CatchType.ManualPerfect;
+            type = _lastCaughtAssisted ? Counter.CatchType.ModAssistedPerfect : Counter.CatchType.ManualPerfect;
         else
-            type = assisted ? Counter.CatchType.ModAssistedNormal : Counter.CatchType.ManualNormal;
+            type = _lastCaughtAssisted ? Counter.CatchType.ModAssistedNormal : Counter.CatchType.ManualNormal;
 
         // Increment the fish counter with the appropriate catch type
         Counter.Incr(bobberBar.whichFish, type);
+        
+        // Reset again since the last caught is processed
+        _lastCaughtAssisted = false;
     }
 }
