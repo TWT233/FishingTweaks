@@ -18,6 +18,13 @@ internal sealed partial class ModEntry
     /// </summary>
     private bool _autoFishing;
 
+
+    /// <summary>
+    ///     Tracks whether the fishing rod is currently hooked.
+    ///     Like a mutex but for simplicity just a bool
+    /// </summary>
+    private bool _hooking = false;
+
     /// <summary>
     ///     Handles button press events to toggle auto-fishing.
     ///     When the configured toggle key is pressed, this method switches
@@ -69,6 +76,9 @@ internal sealed partial class ModEntry
         if (!fishingRod.isFishing) return;
         if (!fishingRod.isNibbling) return;
         if (fishingRod.hit) return;
+
+        if (_hooking) return;
+        _hooking = true;
 
         fishingRod.DoFunction(Game1.player.currentLocation, (int)fishingRod.bobber.X, (int)fishingRod.bobber.Y, 1,
             Game1.player);

@@ -101,7 +101,6 @@ internal sealed partial class ModEntry
     private void RecordOnMenuChanged(object? sender, MenuChangedEventArgs e)
     {
         if (e.OldMenu is not BobberBar bobberBar) return;
-        if (!bobberBar.handledFishResult) return;
 
         // Determine catch type based on fishing results and if mod-assisted
         Counter.CatchType type;
