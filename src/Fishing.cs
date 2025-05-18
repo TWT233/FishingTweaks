@@ -20,10 +20,10 @@ internal sealed partial class ModEntry
 
 
     /// <summary>
-    ///     Tracks whether the fishing rod is currently hooked.
-    ///     Like a mutex but for simplicity just a bool
+    ///     Tracks whether the fishing rod is currently handling auto hook.
+    ///     Like a mutex.
     /// </summary>
-    private bool _hooking = false;
+    private bool _hooking;
 
     /// <summary>
     ///     Handles button press events to toggle auto-fishing.
