@@ -83,6 +83,7 @@ internal sealed partial class ModEntry
         fishingRod.DoFunction(Game1.player.currentLocation, (int)fishingRod.bobber.X, (int)fishingRod.bobber.Y, 1,
             Game1.player);
         fishingRod.isNibbling = false;
+        _hooking = false;
     }
 
     /// <summary>
