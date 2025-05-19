@@ -33,7 +33,7 @@ internal sealed partial class ModEntry
 
         var caught = Counter.Get(bobberBar.whichFish, Counter.CatchType.ManualNormal);
         var perfectCaught = Counter.Get(bobberBar.whichFish, Counter.CatchType.ManualPerfect);
-        if (caught < _config.MinCatchCountForSkipFishing || perfectCaught < _config.MinPerfectCountForSkipFishing)
+        if (caught < _config.MinCatchCountForSkipFishing && perfectCaught < _config.MinPerfectCountForSkipFishing)
         {
             msg.message = Helper.Translation.Get("bobber-bar.needed",
                 new
