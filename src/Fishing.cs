@@ -1,6 +1,7 @@
 ﻿using StardewModdingAPI;
 using StardewModdingAPI.Events;
 using StardewValley;
+using StardewValley.Enchantments;
 using StardewValley.Tools;
 
 namespace FishingTweaks;
@@ -76,6 +77,7 @@ internal sealed partial class ModEntry
         if (!fishingRod.isFishing) return;
         if (!fishingRod.isNibbling) return;
         if (fishingRod.hit) return;
+        if (fishingRod.hasEnchantmentOfType<AutoHookEnchantment>()) return; // Do not need to handle again
 
         if (_hooking) return;
         _hooking = true;
